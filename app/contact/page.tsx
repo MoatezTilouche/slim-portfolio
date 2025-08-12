@@ -118,7 +118,7 @@ export default function ContactPage() {
                     Facebook
                   </Link>
 
-                  <Link href="https://www.linkedin.com/in/slim-abroug-5a3463164/" className="retro-button text-center">
+                  <Link href="https://www.linkedin.com/in/slim-abroug" className="retro-button text-center">
                     <Linkedin className="h-4 w-4 mx-auto mb-2" />
                     LinkedIn
                   </Link>
@@ -194,6 +194,9 @@ export default function ContactPage() {
         <div className="container mx-auto px-6 text-center">
           <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
             © 2025 Slim Abroug. All rights reserved.
+          </p>
+           <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
+            © Developed By Moatez Tilouche.
           </p>
         </div>
       </footer>
