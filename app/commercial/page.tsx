@@ -1,15 +1,21 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { RetroNav } from "@/components/retro-nav"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Play, Music, Calendar, Users } from "lucide-react"
+import Loader from "@/components/loader"
 
 export default function CommercialPage() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
 
- 
+   useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2200)
+    return () => clearTimeout(timer)
+  }, [])
+
   const exhibitionPhotos = [
     {
       id: 1,
@@ -37,6 +43,7 @@ export default function CommercialPage() {
   type: i % 3 === 0 ? "Wedding" : i % 3 === 1 ? "Corporate Event" : "Cultural Event",
   src: `/commercial/${i + 1}.JPG`, // Add .JPG extension
 }));
+  if (loading) return <Loader />;
 
 
   return (

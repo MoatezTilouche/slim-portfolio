@@ -1,11 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import Image from "next/image"
 import { RetroNav } from "@/components/retro-nav"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Clock, User, MapPin, Award } from "lucide-react"
+import Loader from "@/components/loader"
+
 
 interface Film {
   id: number
@@ -26,6 +28,13 @@ interface Film {
 
 export default function FilmographyPage() {
   const [selectedFilm, setSelectedFilm] = useState<Film | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  // Simulate data fetching
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2200)
+    return () => clearTimeout(timer)
+  }, [])
 
 const films: Film[] = [
   {
@@ -304,6 +313,10 @@ const films: Film[] = [
     ],
   },
 ]
+
+  if (loading) return <Loader />
+
+
 
 
   return (

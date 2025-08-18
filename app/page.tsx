@@ -1,38 +1,63 @@
+"use client"
 import Image from "next/image"
 import Link from "next/link"
 import { RetroNav } from "@/components/retro-nav"
+import Loader from "@/components/loader";
+import { useState, useEffect } from "react";
 
 export default function HomePage() {
-  const sampleWorks = [
-    {
-      id: 1,
-      title: "Cinematic Lighting",
-      category: "Cinematography",
-      image: "/SelectedWorksHome/1.jpg",
-      description: "From 'The Light That Remain'",
-    },
-    {
-      id: 2,
-      title: "Natural Landscapes",
-      category: "Location Work",
-      image: "/SelectedWorksHome/2.jpg",
-      description: "Ain Drahem outdoor cinematography",
-    },
-    {
-      id: 3,
-      title: "Portrait Study",
-      category: "Photography",
-      image: "/SelectedWorksHome/4.png",
-      description: "FIFAK Award Winner 2025",
-    },
-    {
-      id: 4,
-      title: "Color Grading",
-      category: "Post-Production",
-      image: "/SelectedWorksHome/3.png",
-      description: "Visual storytelling through color",
-    },
-  ]
+
+     const [loading, setLoading] = useState(true);
+  type SampleWork = {
+    id: number;
+    title: string;
+    category: string;
+    image: string;
+    description: string;
+  };
+
+  const [sampleWorks, setSampleWorks] = useState<SampleWork[]>([]);
+
+  useEffect(() => {
+    // Simulate fetching data
+    const timer = setTimeout(() => {
+      setSampleWorks([
+        {
+          id: 1,
+          title: "Cinematic Lighting",
+          category: "Cinematography",
+          image: "/SelectedWorksHome/1.jpg",
+          description: "From 'The Light That Remain'",
+        },
+        {
+          id: 2,
+          title: "Natural Landscapes",
+          category: "Location Work",
+          image: "/SelectedWorksHome/2.jpg",
+          description: "Ain Drahem outdoor cinematography",
+        },
+        {
+          id: 3,
+          title: "Portrait Study",
+          category: "Photography",
+          image: "/SelectedWorksHome/4.png",
+          description: "FIFAK Award Winner 2025",
+        },
+        {
+          id: 4,
+          title: "Color Grading",
+          category: "Post-Production",
+          image: "/SelectedWorksHome/3.png",
+          description: "Visual storytelling through color",
+        },
+      ]);
+      setLoading(false);
+    }, 1500); // Simulate 1.5s fetch
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) return <Loader />;
 
   return (
     <div className="min-h-screen bg-black">
@@ -74,7 +99,7 @@ export default function HomePage() {
         </section>
 
         {/* Sample Works */}
-        <section className="py-20 bg-gray-900">
+        <section className="py-20">
           <div className="container mx-auto px-6 max-w-6xl">
             <div className="text-center mb-16">
               <h2 className="display-2 retro-title mb-4">Selected Works</h2>

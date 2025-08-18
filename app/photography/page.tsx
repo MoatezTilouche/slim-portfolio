@@ -3,6 +3,7 @@
 import { RetroNav } from "@/components/retro-nav"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { useState, useEffect } from "react";
+import Loader from "@/components/loader";
 
 function FallbackImage({
   srcs,
@@ -45,10 +46,17 @@ function FallbackImage({
 }
 
 export default function PhotographyPage() {
-  const [selectedPhoto, setSelectedPhoto] = useState<string[] | null>(null)
+   const [selectedPhoto, setSelectedPhoto] = useState<string[] | null>(null)
+  const [loading, setLoading] = useState(true);
 
   // Type your award image path below (for the award-winning photo)
   const AWARD_IMAGE_PATH = "/photography/1.png"; // <-- Change this to your actual award image path
+
+  useEffect(() => {
+    // Simulate loading (replace with real data fetching if needed)
+    const timer = setTimeout(() => setLoading(false), 2200);
+    return () => clearTimeout(timer);
+  }, []);
 
   const photos = Array.from({ length: 50 }, (_, i) => ({
     id: i + 1,
@@ -59,7 +67,9 @@ export default function PhotographyPage() {
     title: `Photography ${i + 1}`,
     isAwardWinner: i === 0, // First photo is the award winner
     awardImage: i === 0 ? AWARD_IMAGE_PATH : null, // Only the first photo gets the award image
-  }))
+  }));
+
+  if (loading) return <Loader />;
 
   return (
     <div className="min-h-screen bg-black">

@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -23,10 +23,29 @@ export function RetroNav() {
 
   // Lock scroll when mobile menu is open
   useEffect(() => {
-    if (open) document.body.style.overflow = "hidden"
-    else document.body.style.overflow = ""
-    return () => { document.body.style.overflow = "" }
+    const original = document.body.style.overflow
+    document.body.style.overflow = open ? "hidden" : original || ""
+    return () => { document.body.style.overflow = original || "" }
   }, [open])
+
+  // Close on Esc
+  useEffect(() => {
+    if (!open) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false)
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [open])
+
+  // Ensure state is consistent when resizing from mobile→desktop
+  const handleResize = useCallback(() => {
+    if (window.innerWidth >= 768) setOpen(false)
+  }, [])
+  useEffect(() => {
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [handleResize])
 
   const NavLinks = ({ onClick }: { onClick?: () => void }) => (
     <>
@@ -37,8 +56,10 @@ export function RetroNav() {
             key={item.href}
             href={item.href}
             onClick={onClick}
-            className={`retro-accent text-sm uppercase tracking-widest transition-colors 
-              ${isActive ? "text-white border-b border-white" : "text-gray-400 hover:text-white"}`}
+            prefetch={false}
+            aria-current={isActive ? "page" : undefined}
+            className={`retro-accent text-sm uppercase tracking-widest transition-colors border-b
+              ${isActive ? "text-white border-white" : "text-gray-400 border-transparent hover:text-white"}`}
           >
             {item.label}
           </Link>
@@ -49,41 +70,43 @@ export function RetroNav() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 retro-nav backdrop-blur supports-[backdrop-filter]:bg-black/40">
-      <div className="container mx-auto px-6 py-4">
+      <div className="mx-auto max-w-7xl px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="retro-title text-2xl tracking-wider">
+          <Link href="/" className="retro-title text-2xl tracking-wider" prefetch={false}>
             SLIM ABROUG
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop nav (≥ md) */}
+          <div className="hidden md:flex items-center gap-8">
             <NavLinks />
           </div>
 
-          {/* Mobile hamburger */}
+          {/* Mobile hamburger (< md) */}
           <button
             type="button"
             className="md:hidden inline-flex items-center justify-center rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-white/60"
-            aria-label="Open menu"
+            aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+            {/* burger */}
             <svg
               className={`h-6 w-6 ${open ? "hidden" : "block"}`}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth={2}
             >
               <path d="M3 6h18M3 12h18M3 18h18" />
             </svg>
+            {/* close */}
             <svg
               className={`h-6 w-6 ${open ? "block" : "hidden"}`}
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth={2}
             >
               <path d="M6 6l12 12M6 18L18 6" />
             </svg>

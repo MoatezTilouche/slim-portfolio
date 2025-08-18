@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   title: "Slim Abroug - Director of Photography",
   description:
     "Director of Photography, colorist, and visual storyteller specializing in cinematography, color grading, and visual storytelling. Based in Tunisia.",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -18,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>{children}</body>
     </html>
   )

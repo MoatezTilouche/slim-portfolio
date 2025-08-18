@@ -1,9 +1,13 @@
+import { useState, useEffect } from "react"
+
 import Image from "next/image"
 import Link from "next/link"
 import { RetroNav } from "@/components/retro-nav"
 import { Mail, Instagram, Facebook, Linkedin, Phone, MapPin } from "lucide-react"
 
 export default function ContactPage() {
+    
+
   return (
     <div className="min-h-screen bg-black">
       <RetroNav />
