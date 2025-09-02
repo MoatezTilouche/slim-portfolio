@@ -10,46 +10,44 @@ import { GalleryImage, ThumbnailImage } from "@/components/ui/optimized-image";
 function FallbackImage({
   srcs,
   alt,
+  fallbackSrc = "/placeholder.svg",
   ...props
 }: {
   srcs: string[];  // Array of image sources
   alt: string;
+  fallbackSrc?: string;
   [key: string]: any;
 }) {
-  const [idx, setIdx] = useState(0);
+  const [currentSrc, setCurrentSrc] = useState(srcs[0]);
+  const [hasError, setHasError] = useState(false);
 
-  // Reset idx when srcs changes
+  // Reset state when srcs changes
   useEffect(() => {
-    setIdx(0);
+    setCurrentSrc(srcs[0]);
+    setHasError(false);
   }, [srcs]);
 
   const handleError = () => {
-    if (idx < srcs.length - 1) {
-      setIdx(idx + 1); // Move to next image source
-    } else {
-      setIdx(-1); // No more sources left, fallback to placeholder
+    if (!hasError) {
+      // Try next image source if available
+      const currentIndex = srcs.indexOf(currentSrc);
+      if (currentIndex < srcs.length - 1) {
+        setCurrentSrc(srcs[currentIndex + 1]);
+      } else {
+        // All sources failed, use fallback
+        setCurrentSrc(fallbackSrc);
+        setHasError(true);
+      }
     }
   };
 
-  if (idx === -1) {
-    return (
-      <ThumbnailImage
-        src="/placeholder.svg"  // Placeholder image
-        alt="Placeholder"
-        width={500}  // Set the image width
-        height={500} // Set the image height
-        {...props}
-      />
-    );
-  }
-
   return (
     <ThumbnailImage
-      src={srcs[idx]}  // Use current source in the array
+      src={currentSrc}
       alt={alt}
-      onError={handleError}  // Try next extension on error
-      width={500}  // Set the image width
-      height={500} // Set the image height
+      onError={handleError}
+      width={500}
+      height={500}
       {...props}
     />
   );
@@ -93,28 +91,15 @@ export default function CommercialPage() {
     { id: 4, title: "Event Coverage 4", type: "Wedding", basePath: "/commercial/4", exts: ["jpg", "png"] },
     { id: 5, title: "Event Coverage 5", type: "Corporate Event", basePath: "/commercial/5", exts: ["jpg", "png"] },
     { id: 6, title: "Event Coverage 6", type: "Cultural Event", basePath: "/commercial/6", exts: ["jpg", "png"] },
-    { id: 7, title: "Event Coverage 7", type: "Wedding", basePath: "/commercial/7", exts: ["jpg", "png"] },
     { id: 8, title: "Event Coverage 8", type: "Corporate Event", basePath: "/commercial/8", exts: ["jpg", "png"] },
     { id: 9, title: "Event Coverage 9", type: "Cultural Event", basePath: "/commercial/9", exts: ["jpg", "png"] },
     { id: 10, title: "Event Coverage 10", type: "Wedding", basePath: "/commercial/10", exts: ["jpg", "png"] },
-    { id: 11, title: "Event Coverage 11", type: "Corporate Event", basePath: "/commercial/11", exts: ["jpg", "png"] },
     { id: 12, title: "Event Coverage 12", type: "Cultural Event", basePath: "/commercial/12", exts: ["jpg", "png"] },
     { id: 13, title: "Event Coverage 13", type: "Wedding", basePath: "/commercial/13", exts: ["jpg", "png"] },
     { id: 14, title: "Event Coverage 14", type: "Corporate Event", basePath: "/commercial/14", exts: ["jpg", "png"] },
     { id: 15, title: "Event Coverage 15", type: "Cultural Event", basePath: "/commercial/15", exts: ["jpg", "png"] },
     { id: 16, title: "Event Coverage 16", type: "Wedding", basePath: "/commercial/16", exts: ["jpg", "png"] },
-    { id: 17, title: "Event Coverage 17", type: "Corporate Event", basePath: "/commercial/17", exts: ["jpg", "png"] },
-  ].filter((event) => {
-    // Check if at least one image file exists for this event
-    return event.exts.some(ext => {
-      try {
-        // This is a simple check - in production, you might want to use a different approach
-        return true; // For now, include all events and let the FallbackImage handle missing images
-      } catch {
-        return false;
-      }
-    });
-  });
+  ];
 
   if (loading) return <Loader />;
 
