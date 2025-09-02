@@ -83,7 +83,7 @@ export default function CommercialPage() {
     },
   ];
 
-  // Only include images that actually exist
+  // Only include images that actually exist with correct extensions
   const eventPhotos = [
     { id: 1, title: "Event Coverage 1", type: "Wedding", src: "/commercial/1.jpg" },
     { id: 2, title: "Event Coverage 2", type: "Corporate Event", src: "/commercial/2.jpg" },
@@ -91,14 +91,17 @@ export default function CommercialPage() {
     { id: 4, title: "Event Coverage 4", type: "Wedding", src: "/commercial/4.jpg" },
     { id: 5, title: "Event Coverage 5", type: "Corporate Event", src: "/commercial/5.jpg" },
     { id: 6, title: "Event Coverage 6", type: "Cultural Event", src: "/commercial/6.jpg" },
+    { id: 7, title: "Event Coverage 7", type: "Wedding", src: "/commercial/7.png" },
     { id: 8, title: "Event Coverage 8", type: "Corporate Event", src: "/commercial/8.jpg" },
     { id: 9, title: "Event Coverage 9", type: "Cultural Event", src: "/commercial/9.jpg" },
     { id: 10, title: "Event Coverage 10", type: "Wedding", src: "/commercial/10.jpg" },
+    { id: 11, title: "Event Coverage 11", type: "Corporate Event", src: "/commercial/11.png" },
     { id: 12, title: "Event Coverage 12", type: "Cultural Event", src: "/commercial/12.jpg" },
     { id: 13, title: "Event Coverage 13", type: "Wedding", src: "/commercial/13.jpg" },
     { id: 14, title: "Event Coverage 14", type: "Corporate Event", src: "/commercial/14.jpg" },
     { id: 15, title: "Event Coverage 15", type: "Cultural Event", src: "/commercial/15.jpg" },
     { id: 16, title: "Event Coverage 16", type: "Wedding", src: "/commercial/16.jpg" },
+    { id: 17, title: "Event Coverage 17", type: "Corporate Event", src: "/commercial/17.png" },
   ];
 
   if (loading) return <Loader />;
@@ -164,6 +167,7 @@ export default function CommercialPage() {
                     width={400}
                     height={400}
                     className={`w-full object-cover desaturated ${index % 6 === 0 ? "h-32 md:h-40" : "h-32"}`}
+                    fallbackSrc="/blur.jpg"
                   />
                   <div className="p-3 text-center">
                     <p className="retro-accent text-xs text-gray-500 uppercase tracking-widest mb-1">{event.title}</p>
