@@ -1,17 +1,18 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { RetroNav } from "@/components/retro-nav"
-import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { Play, Music, Calendar, Users } from "lucide-react"
-import Loader from "@/components/loader"
+import { useState, useEffect } from "react";
+import { RetroNav } from "@/components/retro-nav";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Calendar } from "lucide-react";
+import Loader from "@/components/loader";
+import Image from "next/image";
+
 function FallbackImage({
   srcs,
   alt,
   ...props
 }: {
-  srcs: string[]; // Array of image sources
+  srcs: string[];  // Array of image sources
   alt: string;
   [key: string]: any;
 }) {
@@ -31,14 +32,28 @@ function FallbackImage({
   };
 
   if (idx === -1) {
-    return <img src="/placeholder.svg" alt="Placeholder" {...props} />;
+    return (
+      <Image
+        src="/placeholder.svg"  // Placeholder image
+        alt="Placeholder"
+        width={500}  // Set the image width
+        height={500} // Set the image height
+        {...props}
+        placeholder="blur"  // Enable blur-up effect
+        blurDataURL="/placeholder.svg"  // Provide a small blurred image
+      />
+    );
   }
 
   return (
-    <img
-      src={srcs[idx]}
+    <Image
+      src={srcs[idx]}  // Use current source in the array
       alt={alt}
-      onError={handleError} // Try next extension on error
+      onError={handleError}  // Try next extension on error
+      width={500}  // Set the image width
+      height={500} // Set the image height
+      placeholder="blur"  // Enable blur-up effect
+      blurDataURL="/placeholder.svg"  // Provide a small blurred image
       {...props}
     />
   );
@@ -120,6 +135,8 @@ export default function CommercialPage() {
                     width={600}
                     height={400}
                     className="w-full h-56 object-cover desaturated"
+                    loading="lazy"  // Explicit lazy loading for all images
+                    sizes="(max-width: 768px) 100vw, 50vw"  // Dynamically adjust image size
                   />
                   <div className="p-4 text-center">
                     <h3 className="retro-subtitle text-lg mb-1 text-white">{photo.title}</h3>
@@ -145,11 +162,13 @@ export default function CommercialPage() {
                   onClick={() => setSelectedImage(event.basePath)}  // Set the selected image
                 >
                   <FallbackImage
-                    srcs={event.exts.map(ext => `${event.basePath}.${ext}`)} // Pass the array of image sources with different extensions
+                    srcs={event.exts.map((ext) => `${event.basePath}.${ext}`)}  // Pass the array of image sources with different extensions
                     alt={event.title}
                     width={400}
                     height={400}
                     className={`w-full object-cover desaturated ${index % 6 === 0 ? "h-32 md:h-40" : "h-32"}`}
+                    loading="lazy"  // Enable lazy loading
+                    sizes="(max-width: 768px) 100vw, 50vw"  // Dynamically adjust image size
                   />
                   <div className="p-3 text-center">
                     <p className="retro-accent text-xs text-gray-500 uppercase tracking-widest mb-1">{event.title}</p>
@@ -193,6 +212,7 @@ export default function CommercialPage() {
                 width={800}
                 height={600}
                 className="w-full h-auto max-h-[80vh] object-contain"
+                loading="eager"  // Load eagerly for modal images
               />
             </div>
           )}

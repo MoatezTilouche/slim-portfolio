@@ -1,13 +1,13 @@
-"use client"
-import Image from "next/image"
-import Link from "next/link"
-import { RetroNav } from "@/components/retro-nav"
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import { RetroNav } from "@/components/retro-nav";
 import Loader from "@/components/loader";
 import { useState, useEffect } from "react";
 
 export default function HomePage() {
+  const [loading, setLoading] = useState(true);
 
-     const [loading, setLoading] = useState(true);
   type SampleWork = {
     id: number;
     title: string;
@@ -119,6 +119,10 @@ export default function HomePage() {
                       width={600}
                       height={400}
                       className="w-full h-64 object-cover desaturated"
+                      loading="lazy"  // Enable lazy loading for images
+                      sizes="(max-width: 768px) 100vw, 50vw"  // Adjust image size dynamically for small screens
+                      placeholder="blur"  // Add a blur-up effect while loading
+                      blurDataURL="/placeholder.svg"  // Provide low-res placeholder image
                     />
                   </div>
                   <div className="p-6">
@@ -160,5 +164,5 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

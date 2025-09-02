@@ -346,6 +346,10 @@ const films: Film[] = [
                     width={400}
                     height={600}
                     className="w-full h-80 object-cover desaturated"
+                    loading="lazy"  // Lazy load images
+                    sizes="(max-width: 768px) 100vw, 50vw"  // Dynamically adjust image size for small screens
+                    placeholder="blur"  // Add blur-up effect for better user experience
+                    blurDataURL="/placeholder.svg"  // Low-res placeholder
                   />
                 </div>
                 <div className="p-4">
@@ -400,6 +404,7 @@ const films: Film[] = [
                       width={400}
                       height={600}
                       className="w-full h-auto minimal-border desaturated"
+                      priority  // Preload this image since it's critical
                     />
                   </div>
 
@@ -473,6 +478,8 @@ const films: Film[] = [
                           width={500}
                           height={300}
                           className="w-full h-48 object-cover desaturated"
+                          loading="lazy"  // Lazy load images
+                          sizes="(max-width: 768px) 100vw, 50vw"
                         />
                         <div className="p-3 text-center">
                           <p className="retro-accent text-xs text-gray-500">Frame {index + 1}</p>
@@ -509,5 +516,5 @@ const films: Film[] = [
         </div>
       </footer>
     </div>
-  )
+  );
 }

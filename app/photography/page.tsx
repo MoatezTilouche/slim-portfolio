@@ -5,14 +5,16 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { useState, useEffect } from "react";
 import Loader from "@/components/loader";
 
+import Image from "next/image";
+
 function FallbackImage({
   srcs,
   alt,
   ...props
 }: {
-  srcs: string[]
-  alt: string
-  [key: string]: any
+  srcs: string[];  // Array of image sources
+  alt: string;
+  [key: string]: any;
 }) {
   const [idx, setIdx] = useState(0);
 
@@ -22,31 +24,45 @@ function FallbackImage({
   }, [srcs]);
 
   const handleError = () => {
-    if (idx < srcs.length - 1) setIdx(idx + 1);
-    else setIdx(-1);
+    if (idx < srcs.length - 1) {
+      setIdx(idx + 1); // Move to next image source
+    } else {
+      setIdx(-1); // No more sources left, fallback to placeholder
+    }
   };
 
   if (idx === -1) {
     return (
-      <img
-        src="/photography/1.png"
+      <Image
+        src="/placeholder.svg"  // Placeholder image
         alt="Placeholder"
+        width={500}  // Set the image width
+        height={500} // Set the image height
         {...props}
+        placeholder="blur"  // Enable blur-up effect
+        blurDataURL="/path/to/low-quality-image.jpg"  // Provide a small blurred image
       />
     );
   }
+
   return (
-    <img
-      src={srcs[idx]}
+    <Image
+      src={srcs[idx]}  // Use current source in the array
       alt={alt}
-      onError={handleError}
+      onError={handleError}  // Try next extension on error
+      width={500}  // Set the image width
+      height={500} // Set the image height
+      placeholder="blur"  // Enable blur-up effect
+      blurDataURL="/placeholder.svg"  // Provide a small blurred image
       {...props}
     />
   );
 }
 
+
+
 export default function PhotographyPage() {
-   const [selectedPhoto, setSelectedPhoto] = useState<string[] | null>(null)
+  const [selectedPhoto, setSelectedPhoto] = useState<string[] | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Type your award image path below (for the award-winning photo)
@@ -64,7 +80,6 @@ export default function PhotographyPage() {
       `/photography/${i + 1}.jpg`,
       `/photography/${i + 1}.jpeg`,
       `/photography/${i + 1}.png`,
-      
     ],
     title: `Photography ${i + 1}`,
     isAwardWinner: i === 0, // First photo is the award winner
@@ -99,48 +114,57 @@ export default function PhotographyPage() {
               </p>
             </div>
           </section>
-          
+
           {/* Photo Gallery - Exhibition Style */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {photos.map((photo, index) => (
               <div
-                key={photo.id}
-                className={`vintage-card cursor-pointer group relative ${
-                  index % 5 === 0 ? "md:col-span-2 md:row-span-2" : ""
-                } ${index % 7 === 0 ? "lg:col-span-2" : ""}`}
-                onClick={() => setSelectedPhoto(photo.srcs)}
-              >
-                {/* Award badge image (customizable path) */}
-                {photo.isAwardWinner && photo.awardImage && (
-                  <img
-                    src={photo.awardImage}
-                    alt="Award"
-                    className="absolute top-2 left-2 w-12 h-12 object-contain z-20"
-                  />
-                )}
+  key={photo.id}
+  className={`vintage-card cursor-pointer group relative ${
+    index % 5 === 0 ? "md:col-span-2 md:row-span-2" : ""
+  } ${index % 7 === 0 ? "lg:col-span-2" : ""} flex flex-col justify-center items-center border-2 border-black`} // flex column for image + text stacking
+  onClick={() => setSelectedPhoto(photo.srcs)}
+>
+  {/* Award badge image (customizable path) */}
+  {photo.isAwardWinner && photo.awardImage && (
+    <Image
+      src={photo.awardImage}
+      alt="Award"
+      width={500}
+      height={500}
+      className="absolute top-2 left-2 w-12 h-12 object-contain z-20"
+      layout="intrinsic" // Use intrinsic layout for the award image
+    />
+  )}
 
-                {/* Award winner badge text */}
-                {photo.isAwardWinner && (
-                  <div className="absolute -top-2 -right-2 z-10 bg-white text-black px-3 py-1 retro-accent text-xs">
-                    AWARD WINNER
-                  </div>
-                )}
+  {/* Award winner badge text */}
+  {photo.isAwardWinner && (
+    <div className="absolute -top-2 -right-2 z-10 bg-white text-black px-3 py-1 retro-accent text-xs">
+      AWARD WINNER
+    </div>
+  )}
 
-                <FallbackImage
-                  srcs={photo.srcs}
-                  alt={photo.title}
-                  width={400}
-                  height={400}
-                  className={`w-full object-cover desaturated ${index % 5 === 0 ? "h-64 md:h-80" : "h-48"}`}
-                />
+  {/* Image */}
+  <div className="w-full h-auto flex justify-center">
+    <FallbackImage
+      srcs={photo.srcs}
+      alt={photo.title}
+      width={500}
+      height={500}
+      layout="responsive"  // Make it responsive
+      className={`object-cover desaturated ${index % 5 === 0 ? "md:h-80" : "h-48"}`} // Ensure the image fills the container without unnecessary space
+    />
+  </div>
 
-                <div className="p-3 text-center">
-                  <p className="retro-accent text-xs text-gray-500 uppercase tracking-widest">{photo.title}</p>
-                  {photo.isAwardWinner && (
-                    <p className="retro-body text-xs text-gray-400 mt-1 font-medium">FIFAK 2025</p>
-                  )}
-                </div>
-              </div>
+  {/* Text (Title) */}
+  <div className="p-3 text-center w-full">
+    <p className="retro-accent text-xs text-gray-500 uppercase tracking-widest">{photo.title}</p>
+    {photo.isAwardWinner && (
+      <p className="retro-body text-xs text-gray-400 mt-1 font-medium">FIFAK 2025</p>
+    )}
+  </div>
+</div>
+
             ))}
           </div>
 
@@ -179,6 +203,7 @@ export default function PhotographyPage() {
                 alt="Selected photograph"
                 width={800}
                 height={800}
+                layout="responsive"
                 className="w-full h-auto max-h-[80vh] object-contain"
               />
             </div>
