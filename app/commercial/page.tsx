@@ -40,7 +40,7 @@ function FallbackImage({
         height={500} // Set the image height
         {...props}
         placeholder="blur"  // Enable blur-up effect
-        blurDataURL="/placeholder.svg"  // Provide a small blurred image
+        blurDataURL="/blur.jpg"  // Provide a small blurred image
       />
     );
   }
@@ -53,7 +53,7 @@ function FallbackImage({
       width={500}  // Set the image width
       height={500} // Set the image height
       placeholder="blur"  // Enable blur-up effect
-      blurDataURL="/placeholder.svg"  // Provide a small blurred image
+      blurDataURL="/blur.jpg"  // Provide a small blurred image
       {...props}
     />
   );
@@ -130,7 +130,7 @@ export default function CommercialPage() {
                   onClick={() => setSelectedImage(photo.src)}
                 >
                   <Image
-                    src={photo.src || "/placeholder.svg"}
+                    src={photo.src || "/blur.jpg"}
                     alt={photo.title}
                     width={600}
                     height={400}

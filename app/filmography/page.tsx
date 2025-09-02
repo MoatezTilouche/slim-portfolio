@@ -349,7 +349,7 @@ const films: Film[] = [
                     loading="lazy"  // Lazy load images
                     sizes="(max-width: 768px) 100vw, 50vw"  // Dynamically adjust image size for small screens
                     placeholder="blur"  // Add blur-up effect for better user experience
-                    blurDataURL="/placeholder.svg"  // Low-res placeholder
+                    blurDataURL="/blur.jpg"  // Low-res placeholder
                   />
                 </div>
                 <div className="p-4">
@@ -399,7 +399,7 @@ const films: Film[] = [
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
                     <Image
-                      src={selectedFilm.poster || "/placeholder.svg"}
+                      src={selectedFilm.poster || "/blur.jpg"}
                       alt={`${selectedFilm.title} poster`}
                       width={400}
                       height={600}
@@ -473,7 +473,7 @@ const films: Film[] = [
                     {selectedFilm.photos.map((photo, index) => (
                       <div key={index} className="minimal-border overflow-hidden">
                         <Image
-                          src={photo || "/placeholder.svg"}
+                          src={photo || "/blur.jpg"}
                           alt={`${selectedFilm.title} behind the scenes ${index + 1}`}
                           width={500}
                           height={300}
