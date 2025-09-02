@@ -10,46 +10,44 @@ import { GalleryImage, ThumbnailImage } from "@/components/ui/optimized-image";
 function FallbackImage({
   srcs,
   alt,
+  fallbackSrc = "/blur.jpg",
   ...props
 }: {
   srcs: string[];  // Array of image sources
   alt: string;
+  fallbackSrc?: string;
   [key: string]: any;
 }) {
-  const [idx, setIdx] = useState(0);
+  const [currentSrc, setCurrentSrc] = useState(srcs[0]);
+  const [hasError, setHasError] = useState(false);
 
-  // Reset idx when srcs changes
+  // Reset state when srcs changes
   useEffect(() => {
-    setIdx(0);
+    setCurrentSrc(srcs[0]);
+    setHasError(false);
   }, [srcs]);
 
   const handleError = () => {
-    if (idx < srcs.length - 1) {
-      setIdx(idx + 1); // Move to next image source
-    } else {
-      setIdx(-1); // No more sources left, fallback to placeholder
+    if (!hasError) {
+      // Try next image source if available
+      const currentIndex = srcs.indexOf(currentSrc);
+      if (currentIndex < srcs.length - 1) {
+        setCurrentSrc(srcs[currentIndex + 1]);
+      } else {
+        // All sources failed, use fallback
+        setCurrentSrc(fallbackSrc);
+        setHasError(true);
+      }
     }
   };
 
-  if (idx === -1) {
-    return (
-      <ThumbnailImage
-        src="/placeholder.svg"  // Placeholder image
-        alt="Placeholder"
-        width={500}  // Set the image width
-        height={500} // Set the image height
-        {...props}
-      />
-    );
-  }
-
   return (
     <ThumbnailImage
-      src={srcs[idx]}  // Use current source in the array
+      src={currentSrc}
       alt={alt}
-      onError={handleError}  // Try next extension on error
-      width={500}  // Set the image width
-      height={500} // Set the image height
+      onError={handleError}
+      width={500}
+      height={500}
       {...props}
     />
   );
@@ -70,17 +68,52 @@ export default function PhotographyPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  const photos = Array.from({ length: 50 }, (_, i) => ({
-    id: i + 1,
-    srcs: [
-      `/photography/${i + 1}.jpg`,
-      `/photography/${i + 1}.jpeg`,
-      `/photography/${i + 1}.png`,
-    ],
-    title: `Photography ${i + 1}`,
-    isAwardWinner: i === 0, // First photo is the award winner
-    awardImage: i === 0 ? AWARD_IMAGE_PATH : null, // Only the first photo gets the award image
-  }));
+  // Only include images that actually exist
+  const photos = [
+    { id: 1, srcs: ["/photography/1.png"], title: "Photography 1", isAwardWinner: true, awardImage: AWARD_IMAGE_PATH },
+    { id: 2, srcs: ["/photography/2.jpg"], title: "Photography 2", isAwardWinner: false, awardImage: null },
+    { id: 3, srcs: ["/photography/3.jpg"], title: "Photography 3", isAwardWinner: false, awardImage: null },
+    { id: 4, srcs: ["/photography/4.jpg"], title: "Photography 4", isAwardWinner: false, awardImage: null },
+    { id: 6, srcs: ["/photography/6.jpg"], title: "Photography 6", isAwardWinner: false, awardImage: null },
+    { id: 7, srcs: ["/photography/7.jpg"], title: "Photography 7", isAwardWinner: false, awardImage: null },
+    { id: 10, srcs: ["/photography/10.jpg"], title: "Photography 10", isAwardWinner: false, awardImage: null },
+    { id: 11, srcs: ["/photography/11.jpg"], title: "Photography 11", isAwardWinner: false, awardImage: null },
+    { id: 14, srcs: ["/photography/14.jpg"], title: "Photography 14", isAwardWinner: false, awardImage: null },
+    { id: 16, srcs: ["/photography/16.png"], title: "Photography 16", isAwardWinner: false, awardImage: null },
+    { id: 18, srcs: ["/photography/18.png"], title: "Photography 18", isAwardWinner: false, awardImage: null },
+    { id: 19, srcs: ["/photography/19.jpg"], title: "Photography 19", isAwardWinner: false, awardImage: null },
+    { id: 20, srcs: ["/photography/20.jpeg"], title: "Photography 20", isAwardWinner: false, awardImage: null },
+    { id: 21, srcs: ["/photography/21.jpg"], title: "Photography 21", isAwardWinner: false, awardImage: null },
+    { id: 22, srcs: ["/photography/22.jpg"], title: "Photography 22", isAwardWinner: false, awardImage: null },
+    { id: 23, srcs: ["/photography/23.jpg"], title: "Photography 23", isAwardWinner: false, awardImage: null },
+    { id: 24, srcs: ["/photography/24.jpg"], title: "Photography 24", isAwardWinner: false, awardImage: null },
+    { id: 25, srcs: ["/photography/25.jpg"], title: "Photography 25", isAwardWinner: false, awardImage: null },
+    { id: 26, srcs: ["/photography/26.jpg"], title: "Photography 26", isAwardWinner: false, awardImage: null },
+    { id: 27, srcs: ["/photography/27.jpg"], title: "Photography 27", isAwardWinner: false, awardImage: null },
+    { id: 28, srcs: ["/photography/28.jpg"], title: "Photography 28", isAwardWinner: false, awardImage: null },
+    { id: 29, srcs: ["/photography/29.jpg"], title: "Photography 29", isAwardWinner: false, awardImage: null },
+    { id: 30, srcs: ["/photography/30.jpg"], title: "Photography 30", isAwardWinner: false, awardImage: null },
+    { id: 31, srcs: ["/photography/31.jpg"], title: "Photography 31", isAwardWinner: false, awardImage: null },
+    { id: 32, srcs: ["/photography/32.jpg"], title: "Photography 32", isAwardWinner: false, awardImage: null },
+    { id: 33, srcs: ["/photography/33.jpg"], title: "Photography 33", isAwardWinner: false, awardImage: null },
+    { id: 34, srcs: ["/photography/34.jpg"], title: "Photography 34", isAwardWinner: false, awardImage: null },
+    { id: 35, srcs: ["/photography/35.jpg"], title: "Photography 35", isAwardWinner: false, awardImage: null },
+    { id: 36, srcs: ["/photography/36.jpg"], title: "Photography 36", isAwardWinner: false, awardImage: null },
+    { id: 37, srcs: ["/photography/37.jpeg"], title: "Photography 37", isAwardWinner: false, awardImage: null },
+    { id: 38, srcs: ["/photography/38.jpg"], title: "Photography 38", isAwardWinner: false, awardImage: null },
+    { id: 39, srcs: ["/photography/39.png"], title: "Photography 39", isAwardWinner: false, awardImage: null },
+    { id: 40, srcs: ["/photography/40.png"], title: "Photography 40", isAwardWinner: false, awardImage: null },
+    { id: 41, srcs: ["/photography/41.jpg"], title: "Photography 41", isAwardWinner: false, awardImage: null },
+    { id: 42, srcs: ["/photography/42.jpeg"], title: "Photography 42", isAwardWinner: false, awardImage: null },
+    { id: 43, srcs: ["/photography/43.png"], title: "Photography 43", isAwardWinner: false, awardImage: null },
+    { id: 44, srcs: ["/photography/44.png"], title: "Photography 44", isAwardWinner: false, awardImage: null },
+    { id: 45, srcs: ["/photography/45.png"], title: "Photography 45", isAwardWinner: false, awardImage: null },
+    { id: 46, srcs: ["/photography/46.jpg"], title: "Photography 46", isAwardWinner: false, awardImage: null },
+    { id: 47, srcs: ["/photography/47.jpg"], title: "Photography 47", isAwardWinner: false, awardImage: null },
+    { id: 48, srcs: ["/photography/48.png"], title: "Photography 48", isAwardWinner: false, awardImage: null },
+    { id: 49, srcs: ["/photography/49.png"], title: "Photography 49", isAwardWinner: false, awardImage: null },
+    { id: 50, srcs: ["/photography/50.jpg"], title: "Photography 50", isAwardWinner: false, awardImage: null },
+  ];
 
   if (loading) return <Loader />;
 

@@ -10,7 +10,7 @@ import { GalleryImage, ThumbnailImage } from "@/components/ui/optimized-image";
 function FallbackImage({
   srcs,
   alt,
-  fallbackSrc = "/placeholder.svg",
+  fallbackSrc = "/ blur.jpg",
   ...props
 }: {
   srcs: string[];  // Array of image sources

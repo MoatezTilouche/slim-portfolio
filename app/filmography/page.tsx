@@ -96,7 +96,7 @@ const films: Film[] = [
     duration: "20 min",
     year: "2025",
     type: "Short Fiction",
-    poster: "/filmography/project3/1.jpg",
+    poster: "/filmography/project3/main.png",
     description:
       "Outdoor cinematography in Ain Drahem's natural landscapes, integrating nature into visual composition.",
     roles: ["Director of Photography", "Colorist"],
