@@ -132,10 +132,10 @@ export default function CommercialPage() {
                   className="vintage-card cursor-pointer group bg-gray-900 border-gray-700"
                   onClick={() => setSelectedImage(photo.src)}
                 >
-                  <Image
+                  <GalleryImage
                     src={photo.src || "/blur.jpg"}
                     alt={photo.title}
-                    width={600}
+                    width={400}
                     height={400}
                     className="w-full h-56 object-cover desaturated"
                   />
@@ -162,16 +162,12 @@ export default function CommercialPage() {
                   className={`vintage-card cursor-pointer group ${index % 6 === 0 ? "md:col-span-2" : ""} bg-gray-900 border-gray-700`}
                   onClick={() => setSelectedImage(event.src)}  // Set the selected image
                 >
-                  <Image
-                    src={event.src}
+                  <GalleryImage
+                    src={event.src || "/blur.jpg"}
                     alt={event.title}
-                    width={600}
+                    width={400}
                     height={400}
                     className={`w-full object-cover desaturated ${index % 6 === 0 ? "h-32 md:h-40" : "h-32"}`}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "/blur.jpg";
-                    }}
                   />
                   <div className="p-3 text-center">
                     <p className="retro-accent text-xs text-gray-500 uppercase tracking-widest mb-1">{event.title}</p>
