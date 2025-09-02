@@ -6,15 +6,52 @@ import { RetroNav } from "@/components/retro-nav"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Play, Music, Calendar, Users } from "lucide-react"
 import Loader from "@/components/loader"
+function FallbackImage({
+  srcs,
+  alt,
+  ...props
+}: {
+  srcs: string[]; // Array of image sources
+  alt: string;
+  [key: string]: any;
+}) {
+  const [idx, setIdx] = useState(0);
+
+  // Reset idx when srcs changes
+  useEffect(() => {
+    setIdx(0);
+  }, [srcs]);
+
+  const handleError = () => {
+    if (idx < srcs.length - 1) {
+      setIdx(idx + 1); // Move to next image source
+    } else {
+      setIdx(-1); // No more sources left, fallback to placeholder
+    }
+  };
+
+  if (idx === -1) {
+    return <img src="/placeholder.svg" alt="Placeholder" {...props} />;
+  }
+
+  return (
+    <img
+      src={srcs[idx]}
+      alt={alt}
+      onError={handleError} // Try next extension on error
+      {...props}
+    />
+  );
+}
 
 export default function CommercialPage() {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2200)
-    return () => clearTimeout(timer)
-  }, [])
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2200);
+    return () => clearTimeout(timer);
+  }, []);
 
   const exhibitionPhotos = [
     {
@@ -33,23 +70,28 @@ export default function CommercialPage() {
       id: 3,
       title: "Artwork Display",
       event: "Contemporary Art Show",
-      src: "/commercial/event3.jpg",
+      src: "/commercial/event3.png",
     },
-  ]
+  ];
 
-  const eventPhotos = Array.from({ length: 17 }, (_, i) => ({
-  id: i + 1,
-  title: `Event Coverage ${i + 1}`,
-  type: i % 3 === 0 ? "Wedding" : i % 3 === 1 ? "Corporate Event" : "Cultural Event",
-  src: `/commercial/${i + 1}.JPG`, // Add .JPG extension
-}));
+  const eventPhotos = Array.from({ length: 17 }, (_, i) => {
+    const basePath = `/commercial/${i + 1}`;  // Base path without the extension
+    const exts = ["jpg", "png", "jpeg", "webp"];  // Extensions to try
+
+    return {
+      id: i + 1,
+      title: `Event Coverage ${i + 1}`,
+      type: i % 3 === 0 ? "Wedding" : i % 3 === 1 ? "Corporate Event" : "Cultural Event",
+      basePath,  // Just base path (no extension)
+      exts,  // Add extensions to try
+    };
+  });
+
   if (loading) return <Loader />;
-
 
   return (
     <div className="min-h-screen bg-black text-white">
       <RetroNav />
-
       <main className="pt-24 pb-20">
         <div className="container mx-auto px-6 max-w-7xl">
           {/* Header */}
@@ -57,12 +99,9 @@ export default function CommercialPage() {
             <h1 className="display-1 retro-title mb-8 text-white">COMMERCIAL WORK</h1>
             <div className="elegant-divider"></div>
             <p className="retro-body text-lg text-gray-300 max-w-3xl mx-auto">
-              Commercial portfolio showcasing music video cinematography, exhibition documentation, and event coverage.
-              Each project brings unique challenges and creative opportunities.
+              Commercial portfolio showcasing music video cinematography, exhibition documentation, and event coverage. Each project brings unique challenges and creative opportunities.
             </p>
           </section>
-
-         
 
           {/* Exhibition Documentation */}
           <section className="mb-20">
@@ -103,10 +142,10 @@ export default function CommercialPage() {
                 <div
                   key={event.id}
                   className={`vintage-card cursor-pointer group ${index % 6 === 0 ? "md:col-span-2" : ""} bg-gray-900 border-gray-700`}
-                  onClick={() => setSelectedImage(event.src)}
+                  onClick={() => setSelectedImage(event.basePath)}  // Set the selected image
                 >
-                  <Image
-                    src={event.src || "/placeholder.svg"}
+                  <FallbackImage
+                    srcs={event.exts.map(ext => `${event.basePath}.${ext}`)} // Pass the array of image sources with different extensions
                     alt={event.title}
                     width={400}
                     height={400}
@@ -114,7 +153,6 @@ export default function CommercialPage() {
                   />
                   <div className="p-3 text-center">
                     <p className="retro-accent text-xs text-gray-500 uppercase tracking-widest mb-1">{event.title}</p>
-                   
                   </div>
                 </div>
               ))}
@@ -128,13 +166,10 @@ export default function CommercialPage() {
               <div className="elegant-divider"></div>
               <div className="minimal-border p-8 bg-gray-900 border-gray-700">
                 <p className="retro-body text-lg text-gray-300 leading-relaxed mb-6">
-                  Commercial work requires a different mindset — balancing artistic vision with client needs, working
-                  within tight deadlines, and delivering consistent quality across various formats and styles.
+                  Commercial work requires a different mindset — balancing artistic vision with client needs, working within tight deadlines, and delivering consistent quality across various formats and styles.
                 </p>
                 <p className="retro-body text-gray-600 leading-relaxed">
-                  From music videos that capture the energy and emotion of the music, to event coverage that preserves
-                  precious moments, each commercial project is an opportunity to tell a story while meeting professional
-                  standards and client expectations.
+                  From music videos that capture the energy and emotion of the music, to event coverage that preserves precious moments, each commercial project is an opportunity to tell a story while meeting professional standards and client expectations.
                 </p>
                 <div className="mt-8">
                   <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
@@ -152,8 +187,8 @@ export default function CommercialPage() {
         <DialogContent className="max-w-4xl bg-black/95 border-none">
           {selectedImage && (
             <div className="relative">
-              <Image
-                src={selectedImage || "/placeholder.svg"}
+              <FallbackImage
+                srcs={[selectedImage]}  // Only one image selected for the modal
                 alt="Selected commercial work"
                 width={800}
                 height={600}
@@ -173,5 +208,5 @@ export default function CommercialPage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

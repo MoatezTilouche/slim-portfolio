@@ -61,8 +61,10 @@ export default function PhotographyPage() {
   const photos = Array.from({ length: 50 }, (_, i) => ({
     id: i + 1,
     srcs: [
-      `/photography/${i + 1}.JPG`,
-      `/photography/${i + 1}.JPEG`,
+      `/photography/${i + 1}.jpg`,
+      `/photography/${i + 1}.jpeg`,
+      `/photography/${i + 1}.png`,
+      
     ],
     title: `Photography ${i + 1}`,
     isAwardWinner: i === 0, // First photo is the award winner

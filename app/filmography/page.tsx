@@ -123,7 +123,7 @@ const films: Film[] = [
     duration: "24 min",
     year: "2025",
     type: "Short Fiction",
-    poster: "/filmography/project4/main.jpg",
+    poster: "/filmography/project4/main.png",
     description:
       "Complete image responsibility project, handling all visual aspects from cinematography to post-production.",
     roles: ["Cinematographer", "Director of Photography", "Camera Operator", "Colorist"],
