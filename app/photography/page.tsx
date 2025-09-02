@@ -5,7 +5,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { useState, useEffect } from "react";
 import Loader from "@/components/loader";
 
-import Image from "next/image";
+import { GalleryImage, ThumbnailImage } from "@/components/ui/optimized-image";
 
 function FallbackImage({
   srcs,
@@ -33,27 +33,23 @@ function FallbackImage({
 
   if (idx === -1) {
     return (
-      <Image
+      <ThumbnailImage
         src="/placeholder.svg"  // Placeholder image
         alt="Placeholder"
         width={500}  // Set the image width
         height={500} // Set the image height
         {...props}
-        placeholder="blur"  // Enable blur-up effect
-        blurDataURL="/blur.jpg"  // Provide a small blurred image
       />
     );
   }
 
   return (
-    <Image
+    <ThumbnailImage
       src={srcs[idx]}  // Use current source in the array
       alt={alt}
       onError={handleError}  // Try next extension on error
       width={500}  // Set the image width
       height={500} // Set the image height
-      placeholder="blur"  // Enable blur-up effect
-      blurDataURL="/blur.jpg"  // Provide a small blurred image
       {...props}
     />
   );
@@ -127,13 +123,12 @@ export default function PhotographyPage() {
 >
   {/* Award badge image (customizable path) */}
   {photo.isAwardWinner && photo.awardImage && (
-    <Image
+    <ThumbnailImage
       src={photo.awardImage}
       alt="Award"
-      width={500}
-      height={500}
+      width={48}
+      height={48}
       className="absolute top-2 left-2 w-12 h-12 object-contain z-20"
-      layout="intrinsic" // Use intrinsic layout for the award image
     />
   )}
 
@@ -151,7 +146,6 @@ export default function PhotographyPage() {
       alt={photo.title}
       width={500}
       height={500}
-      layout="responsive"  // Make it responsive
       className={`object-cover desaturated ${index % 5 === 0 ? "md:h-80" : "h-48"}`} // Ensure the image fills the container without unnecessary space
     />
   </div>
@@ -203,7 +197,6 @@ export default function PhotographyPage() {
                 alt="Selected photograph"
                 width={800}
                 height={800}
-                layout="responsive"
                 className="w-full h-auto max-h-[80vh] object-contain"
               />
             </div>

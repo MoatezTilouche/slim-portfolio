@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-import Image from "next/image"
+import { GalleryImage } from "@/components/ui/optimized-image"
 import Link from "next/link"
 import { RetroNav } from "@/components/retro-nav"
 import { Mail, Instagram, Facebook, Linkedin, Phone, MapPin } from "lucide-react"
@@ -29,7 +29,7 @@ export default function ContactPage() {
             <div className="space-y-8">
               <div className="text-center">
                 <div className="minimal-border inline-block p-4 bg-gray-900">
-                  <Image
+                  <GalleryImage
                     src="/contact.JPEG"
                     alt="Slim Abroug - Director of Photography"
                     width={400}

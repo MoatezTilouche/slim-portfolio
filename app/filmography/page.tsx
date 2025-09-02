@@ -1,7 +1,7 @@
 "use client"
 
 import { useState,useEffect } from "react"
-import Image from "next/image"
+import { GalleryImage } from "@/components/ui/optimized-image"
 import { RetroNav } from "@/components/retro-nav"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
@@ -340,16 +340,12 @@ const films: Film[] = [
             {films.map((film) => (
               <div key={film.id} className="vintage-card cursor-pointer group" onClick={() => setSelectedFilm(film)}>
                 <div>
-                  <Image
+                  <GalleryImage
                     src={film.poster || "/placeholder.svg"}
                     alt={`${film.title} poster`}
                     width={400}
                     height={600}
                     className="w-full h-80 object-cover desaturated"
-                    loading="lazy"  // Lazy load images
-                    sizes="(max-width: 768px) 100vw, 50vw"  // Dynamically adjust image size for small screens
-                    placeholder="blur"  // Add blur-up effect for better user experience
-                    blurDataURL="/blur.jpg"  // Low-res placeholder
                   />
                 </div>
                 <div className="p-4">
@@ -398,13 +394,13 @@ const films: Film[] = [
                 {/* Film Details */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <Image
+                    <GalleryImage
                       src={selectedFilm.poster || "/blur.jpg"}
                       alt={`${selectedFilm.title} poster`}
                       width={400}
                       height={600}
                       className="w-full h-auto minimal-border desaturated"
-                      priority  // Preload this image since it's critical
+                      priority={true}
                     />
                   </div>
 
@@ -472,14 +468,12 @@ const films: Film[] = [
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
                     {selectedFilm.photos.map((photo, index) => (
                       <div key={index} className="minimal-border overflow-hidden">
-                        <Image
+                        <GalleryImage
                           src={photo || "/blur.jpg"}
                           alt={`${selectedFilm.title} behind the scenes ${index + 1}`}
                           width={500}
                           height={300}
                           className="w-full h-48 object-cover desaturated"
-                          loading="lazy"  // Lazy load images
-                          sizes="(max-width: 768px) 100vw, 50vw"
                         />
                         <div className="p-3 text-center">
                           <p className="retro-accent text-xs text-gray-500">Frame {index + 1}</p>

@@ -5,7 +5,7 @@ import { RetroNav } from "@/components/retro-nav";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Calendar } from "lucide-react";
 import Loader from "@/components/loader";
-import Image from "next/image";
+import { GalleryImage, ThumbnailImage } from "@/components/ui/optimized-image";
 
 function FallbackImage({
   srcs,
@@ -33,27 +33,23 @@ function FallbackImage({
 
   if (idx === -1) {
     return (
-      <Image
+      <ThumbnailImage
         src="/placeholder.svg"  // Placeholder image
         alt="Placeholder"
         width={500}  // Set the image width
         height={500} // Set the image height
         {...props}
-        placeholder="blur"  // Enable blur-up effect
-        blurDataURL="/blur.jpg"  // Provide a small blurred image
       />
     );
   }
 
   return (
-    <Image
+    <ThumbnailImage
       src={srcs[idx]}  // Use current source in the array
       alt={alt}
       onError={handleError}  // Try next extension on error
       width={500}  // Set the image width
       height={500} // Set the image height
-      placeholder="blur"  // Enable blur-up effect
-      blurDataURL="/blur.jpg"  // Provide a small blurred image
       {...props}
     />
   );
@@ -129,14 +125,12 @@ export default function CommercialPage() {
                   className="vintage-card cursor-pointer group bg-gray-900 border-gray-700"
                   onClick={() => setSelectedImage(photo.src)}
                 >
-                  <Image
+                  <GalleryImage
                     src={photo.src || "/blur.jpg"}
                     alt={photo.title}
                     width={600}
                     height={400}
                     className="w-full h-56 object-cover desaturated"
-                    loading="lazy"  // Explicit lazy loading for all images
-                    sizes="(max-width: 768px) 100vw, 50vw"  // Dynamically adjust image size
                   />
                   <div className="p-4 text-center">
                     <h3 className="retro-subtitle text-lg mb-1 text-white">{photo.title}</h3>

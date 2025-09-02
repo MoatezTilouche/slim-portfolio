@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import { GalleryImage, HeroImage } from "@/components/ui/optimized-image";
 import Link from "next/link";
 import { RetroNav } from "@/components/retro-nav";
 import Loader from "@/components/loader";
@@ -113,16 +113,12 @@ export default function HomePage() {
               {sampleWorks.map((work) => (
                 <div key={work.id} className="vintage-card group">
                   <div>
-                    <Image
+                    <GalleryImage
                       src={work.image || "/placeholder.svg"}
                       alt={work.title}
                       width={600}
                       height={400}
                       className="w-full h-64 object-cover desaturated"
-                      loading="lazy"  // Enable lazy loading for images
-                      sizes="(max-width: 768px) 100vw, 50vw"  // Adjust image size dynamically for small screens
-                      placeholder="blur"  // Add a blur-up effect while loading
-                      blurDataURL="/placeholder.svg"  // Provide low-res placeholder image
                     />
                   </div>
                   <div className="p-6">
