@@ -131,12 +131,14 @@ export default function CommercialPage() {
                   className="vintage-card cursor-pointer group bg-gray-900 border-gray-700"
                   onClick={() => setSelectedImage(photo.src)}
                 >
-                  <GalleryImage
+                  <img
                     src={photo.src || "/blur.jpg"}
                     alt={photo.title}
-                    width={600}
-                    height={400}
                     className="w-full h-56 object-cover desaturated"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "/blur.jpg";
+                    }}
                   />
                   <div className="p-4 text-center">
                     <h3 className="retro-subtitle text-lg mb-1 text-white">{photo.title}</h3>
@@ -161,13 +163,14 @@ export default function CommercialPage() {
                   className={`vintage-card cursor-pointer group ${index % 6 === 0 ? "md:col-span-2" : ""} bg-gray-900 border-gray-700`}
                   onClick={() => setSelectedImage(event.src)}  // Set the selected image
                 >
-                  <GalleryImage
+                  <img
                     src={event.src}
                     alt={event.title}
-                    width={400}
-                    height={400}
                     className={`w-full object-cover desaturated ${index % 6 === 0 ? "h-32 md:h-40" : "h-32"}`}
-                    fallbackSrc="/blur.jpg"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "/blur.jpg";
+                    }}
                   />
                   <div className="p-3 text-center">
                     <p className="retro-accent text-xs text-gray-500 uppercase tracking-widest mb-1">{event.title}</p>
@@ -205,13 +208,14 @@ export default function CommercialPage() {
         <DialogContent className="max-w-4xl bg-black/95 border-none">
           {selectedImage && (
             <div className="relative">
-              <FallbackImage
-                srcs={[selectedImage]}  // Only one image selected for the modal
+              <img
+                src={selectedImage}
                 alt="Selected commercial work"
-                width={800}
-                height={600}
                 className="w-full h-auto max-h-[80vh] object-contain"
-                loading="eager"  // Load eagerly for modal images
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = "/blur.jpg";
+                }}
               />
             </div>
           )}
