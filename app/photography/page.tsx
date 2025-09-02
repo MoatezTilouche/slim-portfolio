@@ -33,7 +33,7 @@ function FallbackImage({
       const currentIndex = srcs.indexOf(currentSrc);
       if (currentIndex < srcs.length - 1) {
         setCurrentSrc(srcs[currentIndex + 1]);
-      } else {
+    } else {
         // All sources failed, use fallback
         setCurrentSrc(fallbackSrc);
         setHasError(true);

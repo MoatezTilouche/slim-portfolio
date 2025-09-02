@@ -6,6 +6,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Calendar } from "lucide-react";
 import Loader from "@/components/loader";
 import { GalleryImage, ThumbnailImage } from "@/components/ui/optimized-image";
+import Image from "next/image";
 
 function FallbackImage({
   srcs,
@@ -131,14 +132,12 @@ export default function CommercialPage() {
                   className="vintage-card cursor-pointer group bg-gray-900 border-gray-700"
                   onClick={() => setSelectedImage(photo.src)}
                 >
-                  <img
+                  <Image
                     src={photo.src || "/blur.jpg"}
                     alt={photo.title}
+                    width={600}
+                    height={400}
                     className="w-full h-56 object-cover desaturated"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "/blur.jpg";
-                    }}
                   />
                   <div className="p-4 text-center">
                     <h3 className="retro-subtitle text-lg mb-1 text-white">{photo.title}</h3>
@@ -163,7 +162,7 @@ export default function CommercialPage() {
                   className={`vintage-card cursor-pointer group ${index % 6 === 0 ? "md:col-span-2" : ""} bg-gray-900 border-gray-700`}
                   onClick={() => setSelectedImage(event.src)}  // Set the selected image
                 >
-                  <img
+                  <Image
                     src={event.src}
                     alt={event.title}
                     className={`w-full object-cover desaturated ${index % 6 === 0 ? "h-32 md:h-40" : "h-32"}`}
@@ -208,14 +207,13 @@ export default function CommercialPage() {
         <DialogContent className="max-w-4xl bg-black/95 border-none">
           {selectedImage && (
             <div className="relative">
-              <img
-                src={selectedImage}
+              <FallbackImage
+                srcs={[selectedImage]}  // Only one image selected for the modal
                 alt="Selected commercial work"
+                width={800}
+                height={600}
                 className="w-full h-auto max-h-[80vh] object-contain"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = "/blur.jpg";
-                }}
+                loading="eager"  // Load eagerly for modal images
               />
             </div>
           )}
