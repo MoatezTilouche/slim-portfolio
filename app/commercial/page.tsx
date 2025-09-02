@@ -165,6 +165,8 @@ export default function CommercialPage() {
                   <Image
                     src={event.src}
                     alt={event.title}
+                    width={600}
+                    height={400}
                     className={`w-full object-cover desaturated ${index % 6 === 0 ? "h-32 md:h-40" : "h-32"}`}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
