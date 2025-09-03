@@ -86,7 +86,7 @@ export default function CommercialPage() {
 
   // Only include images that actually exist with correct extensions
   const eventPhotos = [
-    { id: 1, title: "Event Coverage 1", type: "Wedding", src: "/commercial/1.jpg" },
+    { id: 1, title: "Event Coverage 1", type: "Wedding", src: "/commercial/1.JPG" },
     { id: 2, title: "Event Coverage 2", type: "Corporate Event", src: "/commercial/2.jpg" },
     { id: 3, title: "Event Coverage 3", type: "Cultural Event", src: "/commercial/3.jpg" },
     { id: 4, title: "Event Coverage 4", type: "Wedding", src: "/commercial/4.jpg" },
