@@ -116,9 +116,9 @@ export default function HomePage() {
                     <GalleryImage
                       src={work.image || "/placeholder.svg"}
                       alt={work.title}
-                      width={600}
-                      height={400}
-                      className="w-full h-64 object-cover desaturated"
+                      width={1000}
+                      height={500}
+                      className=" h-full object-cover "
                     />
                   </div>
                   <div className="p-6">
@@ -156,6 +156,9 @@ export default function HomePage() {
         <div className="container mx-auto px-6 text-center">
           <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
             © 2025 Slim Abroug. All rights reserved.
+          </p>
+          <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
+            © Developed By Moatez Tilouche.
           </p>
         </div>
       </footer>

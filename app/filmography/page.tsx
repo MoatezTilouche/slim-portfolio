@@ -343,9 +343,9 @@ const films: Film[] = [
                   <GalleryImage
                     src={film.poster || "/placeholder.svg"}
                     alt={`${film.title} poster`}
-                    width={400}
-                    height={600}
-                    className="w-full h-80 object-cover desaturated"
+                    width={1000}
+                    height={500}
+                    className="w-full h-96 object-cover "
                   />
                 </div>
                 <div className="p-4">
