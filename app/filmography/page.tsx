@@ -164,6 +164,7 @@ const films: Film[] = [
       "/filmography/project5/3.png",
       "/filmography/project5/4.png",
       "/filmography/project5/5.png",
+      "/filmography/project5/6.png",
     ],
   },
   {
@@ -173,7 +174,7 @@ const films: Film[] = [
     duration: "13 min",
     year: "2025",
     type: "Short Fiction",
-    poster: "/filmography/project6/main.jpg",
+    poster: "/filmography/project6/main.png",
     description: "Exploration of transformation and renewal through innovative cinematographic techniques.",
     roles: ["Director of Photography", "Colorist"],
     highlights: [
@@ -187,7 +188,9 @@ const films: Film[] = [
       "/filmography/project6/2.jpg",
       "/filmography/project6/3.jpg",
       "/filmography/project6/4.jpg",
-      "/filmography/project6/5.jpg",
+      "/filmography/project6/5.jpg",   
+      "/filmography/project6/6.jpg",
+
     ],
   },
   {
@@ -222,7 +225,7 @@ const films: Film[] = [
     duration: "13 min",
     year: "2025",
     type: "Short Fiction",
-    poster: "/filmography/project8/main.jpg",
+    poster: "/filmography/project8/main.png",
     description: "Collaborative directorial project exploring identity and questioning.",
     roles: ["Director of Photography", "Colorist"],
     highlights: [
@@ -237,6 +240,7 @@ const films: Film[] = [
       "/filmography/project8/3.jpg",
       "/filmography/project8/4.jpg",
       "/filmography/project8/5.jpg",
+       "/filmography/project8/6.jpg",
     ],
   },
   {
@@ -261,6 +265,8 @@ const films: Film[] = [
       "/filmography/project9/3.png",
       "/filmography/project9/4.png",
       "/filmography/project9/5.png",
+      "/filmography/project9/6.png",
+      
     ],
   },
   {
@@ -312,6 +318,65 @@ const films: Film[] = [
       "/filmography/project11/5.png",
     ],
   },
+   {
+    id: 12,
+    title: "Bakhta",
+    director: "Zeineb Ben Salah",
+    duration: "8 min",
+    year: "2026",
+    type: "Short Fiction",
+    poster: "/filmography/project12/main.jpeg",
+    description: "Award-winning film from Impress Film Competition.",
+    roles: ["Cinematographer"],
+    highlights: [
+      "Impress Film Competition winner",
+      "Collaborative direction",
+      "Competition cinematography",
+      "Award recognition",
+    ],
+    awards: ["Impress Film Competition Award"],
+    photos: [
+      "/filmography/project12/1.png",
+      "/filmography/project12/2.png",
+      "/filmography/project12/3.png",
+      "/filmography/project12/4.png",
+      "/filmography/project12/5.png",
+      "/filmography/project12/6.png", 
+      "/filmography/project12/8.png", 
+      "/filmography/project12/9.png", 
+      "/filmography/project12/10.png", 
+      
+    ],
+  },
+   {
+    id: 13,
+    title: "Art Music Transition",
+    director: "Shahin Nahdi & Baha Merdassi",
+    duration: "8 min",
+    year: "2024",
+    type: "Short Fiction",
+    poster: "/filmography/project13/main.png",
+    description: "Award-winning film from Impress Film Competition.",
+    roles: ["Cinematographer"],
+    highlights: [
+      "Impress Film Competition winner",
+      "Collaborative direction",
+      "Competition cinematography",
+      "Award recognition",
+    ],
+    awards: ["Impress Film Competition Award"],
+    photos: [
+      "/filmography/project13/1.png",
+      "/filmography/project13/2.png",
+      "/filmography/project13/3.png",
+      "/filmography/project13/4.png",
+      "/filmography/project13/5.png",
+      "/filmography/project13/6.png",
+      "/filmography/project13/7.png",
+      "/filmography/project13/8.png",
+    ],
+  },
+ 
 ]
 
   if (loading) return <Loader />
