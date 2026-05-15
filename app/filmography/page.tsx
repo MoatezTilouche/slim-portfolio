@@ -331,7 +331,6 @@ const films: Film[] = [
     highlights: [
      "Indoor cinematography",
     ],
-    awards: ["Impress Film Competition Award"],
     photos: [
       "/filmography/project12/1.png",
       "/filmography/project12/2.png",
@@ -359,7 +358,6 @@ const films: Film[] = [
     highlights: [
       "Urban Cinematography"
     ],
-    awards: ["Impress Film Competition Award"],
     photos: [
       "/filmography/project13/1.png",
       "/filmography/project13/2.png",
