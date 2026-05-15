@@ -457,7 +457,7 @@ const films: Film[] = [
                       alt={`${selectedFilm.title} poster`}
                       width={400}
                       height={600}
-                      className="w-full h-auto minimal-border desaturated"
+                      className="w-full h-auto minimal-border"
                       priority={true}
                     />
                   </div>
@@ -531,7 +531,7 @@ const films: Film[] = [
                           alt={`${selectedFilm.title} behind the scenes ${index + 1}`}
                           width={500}
                           height={300}
-                          className="w-full h-48 object-cover desaturated"
+                          className="w-full h-48 object-cover"
                         />
                         <div className="p-3 text-center">
                           <p className="retro-accent text-xs text-gray-500">Frame {index + 1}</p>

@@ -186,7 +186,7 @@ export default function PhotographyPage() {
       alt={photo.title}
       width={500}
       height={500}
-      className={`object-cover desaturated ${index % 5 === 0 ? "md:h-80" : "h-48"}`} // Ensure the image fills the container without unnecessary space
+      className={`object-cover ${index % 5 === 0 ? "md:h-80" : "h-48"}`} // Ensure the image fills the container without unnecessary space
     />
   </div>
 

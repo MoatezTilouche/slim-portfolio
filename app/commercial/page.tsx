@@ -137,7 +137,7 @@ export default function CommercialPage() {
                     alt={photo.title}
                     width={400}
                     height={400}
-                    className="w-full h-56 object-cover desaturated"
+                    className="w-full h-56 object-cover"
                   />
                   <div className="p-4 text-center">
                     <h3 className="retro-subtitle text-lg mb-1 text-white">{photo.title}</h3>
@@ -167,7 +167,7 @@ export default function CommercialPage() {
                     alt={event.title}
                     width={400}
                     height={400}
-                    className={`w-full object-cover desaturated ${index % 6 === 0 ? "h-32 md:h-40" : "h-32"}`}
+                    className={`w-full object-cover ${index % 6 === 0 ? "h-32 md:h-40" : "h-32"}`}
                   />
                   <div className="p-3 text-center">
                     <p className="retro-accent text-xs text-gray-500 uppercase tracking-widest mb-1">{event.title}</p>
