@@ -3,18 +3,21 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect, useState, useCallback } from "react"
-
-const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/filmography", label: "Filmography" },
-  { href: "/photography", label: "Photography" },
-  { href: "/commercial", label: "Commercial" },
-  { href: "/contact", label: "Contact" },
-]
+import { useLanguage } from "@/contexts/language-context"
+import { LanguageSwitcher } from "./language-switcher"
 
 export function RetroNav() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const { t } = useLanguage()
+
+  const navItems = [
+    { href: "/", label: t("nav.home") },
+    { href: "/filmography", label: t("nav.filmography") },
+    { href: "/photography", label: t("nav.photography") },
+    { href: "/commercial", label: t("nav.commercial") },
+    { href: "/contact", label: t("nav.contact") },
+  ]
 
   // Close menu on route change
   useEffect(() => {
@@ -79,38 +82,44 @@ export function RetroNav() {
           {/* Desktop nav (≥ md) */}
           <div className="hidden md:flex items-center gap-8">
             <NavLinks />
+            <div className="ml-4 border-l border-gray-800 pl-6">
+              <LanguageSwitcher />
+            </div>
           </div>
 
-          {/* Mobile hamburger (< md) */}
-          <button
-            type="button"
-            className="md:hidden inline-flex items-center justify-center rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-white/60"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-          >
-            <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
-            {/* burger */}
-            <svg
-              className={`h-6 w-6 ${open ? "hidden" : "block"}`}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
+          {/* Mobile buttons (< md) */}
+          <div className="flex md:hidden items-center gap-4">
+            <LanguageSwitcher />
+            <button
+              type="button"
+              className="inline-flex items-center justify-center rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-white/60"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
             >
-              <path d="M3 6h18M3 12h18M3 18h18" />
-            </svg>
-            {/* close */}
-            <svg
-              className={`h-6 w-6 ${open ? "block" : "hidden"}`}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path d="M6 6l12 12M6 18L18 6" />
-            </svg>
-          </button>
+              <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
+              {/* burger */}
+              <svg
+                className={`h-6 w-6 ${open ? "hidden" : "block"}`}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path d="M3 6h18M3 12h18M3 18h18" />
+              </svg>
+              {/* close */}
+              <svg
+                className={`h-6 w-6 ${open ? "block" : "hidden"}`}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path d="M6 6l12 12M6 18L18 6" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 

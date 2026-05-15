@@ -11,18 +11,20 @@ export const metadata: Metadata = {
     "Director of Photography, colorist, and visual storyteller specializing in cinematography, color grading, and visual storytelling. Based in Tunisia.",
 }
 
+import { LanguageProvider } from "@/contexts/language-context"
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-   
-
-  <html lang="en" suppressHydrationWarning>
-    <body className={inter.className}>
-      {children}
-    </body>
-  </html>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
+      </body>
+    </html>
   )
 }

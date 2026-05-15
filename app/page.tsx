@@ -4,8 +4,10 @@ import Link from "next/link";
 import { RetroNav } from "@/components/retro-nav";
 import Loader from "@/components/loader";
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/contexts/language-context";
 
 export default function HomePage() {
+  const { t } = useLanguage();
   const [loading, setLoading] = useState(true);
 
   type SampleWork = {
@@ -69,30 +71,38 @@ export default function HomePage() {
           <div className="container mx-auto max-w-6xl">
             <div className="text-center mb-16">
               <h1 className="display-1 retro-title mb-8">
-                DIRECTOR OF
-                <br />
-                PHOTOGRAPHY
+                {t("home.title").split(" OF ").length > 1 ? (
+                   <>
+                     {t("home.title").split(" OF ")[0]} OF
+                     <br />
+                     {t("home.title").split(" OF ")[1]}
+                   </>
+                ) : t("home.title").includes("PHOTOGRAPHIE") ? (
+                  <>
+                    DIRECTEUR DE LA
+                    <br />
+                    PHOTOGRAPHIE
+                  </>
+                ) : t("home.title")}
               </h1>
 
               <div className="elegant-divider"></div>
 
               <p className="display-3 retro-subtitle text-gray-300 mb-8 max-w-4xl mx-auto">
-                Colorist & Visual Storyteller
+                {t("home.subtitle")}
               </p>
 
               <p className="retro-body text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
-                With a background in cinema and a passion for crafting powerful images — whether in motion or still. My
-                work moves between narrative films, photography, and commissioned projects like music videos and event
-                coverage. I approach every frame with intention, balancing technical precision with emotional impact.
+                {t("home.description")}
               </p>
             </div>
 
             <div className="text-center mb-20">
               <Link href="/filmography">
-                <button className="retro-button mr-6">View Filmography</button>
+                <button className="retro-button mr-6">{t("home.view_filmography")}</button>
               </Link>
               <Link href="/contact">
-                <button className="retro-button">Get In Touch</button>
+                <button className="retro-button">{t("home.get_in_touch")}</button>
               </Link>
             </div>
           </div>
@@ -102,10 +112,10 @@ export default function HomePage() {
         <section className="py-20">
           <div className="container mx-auto px-6 max-w-6xl">
             <div className="text-center mb-16">
-              <h2 className="display-2 retro-title mb-4">Selected Works</h2>
+              <h2 className="display-2 retro-title mb-4">{t("home.selected_works")}</h2>
               <div className="elegant-divider"></div>
               <p className="retro-body text-gray-400">
-                A curated selection showcasing visual depth, rhythm, and storytelling
+                {t("home.selected_subtitle")}
               </p>
             </div>
 
@@ -137,15 +147,13 @@ export default function HomePage() {
         {/* About Section */}
         <section className="py-20">
           <div className="container mx-auto px-6 max-w-4xl text-center">
-            <h2 className="display-2 retro-title mb-8">Visual Philosophy</h2>
+            <h2 className="display-2 retro-title mb-8">{t("home.philosophy_title")}</h2>
             <div className="elegant-divider"></div>
             <p className="retro-body text-lg text-gray-300 leading-relaxed mb-8">
-              Currently based in Tunisia, I'm always looking to collaborate on projects that value visual depth, rhythm,
-              and storytelling. Every project is an opportunity to explore the intersection of technical mastery and
-              emotional resonance.
+              {t("home.philosophy_p1")}
             </p>
             <p className="retro-body text-gray-400">
-              From narrative films to commercial work, each frame is crafted with intention and purpose.
+              {t("home.philosophy_p2")}
             </p>
           </div>
         </section>
@@ -155,7 +163,7 @@ export default function HomePage() {
       <footer className="border-t border-gray-800 py-12">
         <div className="container mx-auto px-6 text-center">
           <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
-            © 2025 Slim Abroug. All rights reserved.
+            © 2025 Slim Abroug. {t("footer.rights")}
           </p>
           <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
             © Developed By Moatez Tilouche.
@@ -163,5 +171,5 @@ export default function HomePage() {
         </div>
       </footer>
     </div>
-  );
+  )
 }

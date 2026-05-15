@@ -55,7 +55,10 @@ function FallbackImage({
 
 
 
+import { useLanguage } from "@/contexts/language-context";
+
 export default function PhotographyPage() {
+  const { t } = useLanguage();
   const [selectedPhoto, setSelectedPhoto] = useState<string[] | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -132,21 +135,20 @@ export default function PhotographyPage() {
         <div className="container mx-auto px-6 max-w-7xl">
           {/* Header */}
           <section className="text-center py-16">
-            <h1 className="display-1 retro-title mb-8">PHOTOGRAPHY</h1>
+            <h1 className="display-1 retro-title mb-8">{t("photo.title")}</h1>
             <div className="elegant-divider"></div>
             <p className="retro-body text-lg text-gray-400 max-w-3xl mx-auto mb-8">
-              A curated exhibition of 50 photographs showcasing the art of capturing moments, emotions, and stories
-              through still imagery. Each frame represents a unique perspective and creative vision.
+              {t("photo.subtitle")}
             </p>
 
             {/* Award Winner Highlight */}
             <div className="minimal-border p-8 bg-gray-900 max-w-2xl mx-auto">
-              <h3 className="retro-subtitle text-xl mb-3">Award Recognition</h3>
+              <h3 className="retro-subtitle text-xl mb-3">{t("photo.award_recognition")}</h3>
               <p className="retro-body text-gray-300">
-                Featured: Best Photography Winner at FIFAK Exhibition Competition 2025
+                {t("photo.fifak_winner")}
               </p>
               <p className="retro-accent text-sm text-gray-500 mt-2 italic">
-                "A moment captured that speaks louder than words"
+                "{t("photo.quote")}"
               </p>
             </div>
           </section>
@@ -155,68 +157,63 @@ export default function PhotographyPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {photos.map((photo, index) => (
               <div
-  key={photo.id}
-  className={`vintage-card cursor-pointer group relative ${
-    index % 5 === 0 ? "md:col-span-2 md:row-span-2" : ""
-  } ${index % 7 === 0 ? "lg:col-span-2" : ""} flex flex-col justify-center items-center border-2 border-black`} // flex column for image + text stacking
-  onClick={() => setSelectedPhoto(photo.srcs)}
->
-  {/* Award badge image (customizable path) */}
-  {photo.isAwardWinner && photo.awardImage && (
-    <ThumbnailImage
-      src={photo.awardImage}
-      alt="Award"
-      width={48}
-      height={48}
-      className="absolute top-2 left-2 w-12 h-12 object-contain z-20"
-    />
-  )}
+                key={photo.id}
+                className={`vintage-card cursor-pointer group relative ${
+                  index % 5 === 0 ? "md:col-span-2 md:row-span-2" : ""
+                } ${index % 7 === 0 ? "lg:col-span-2" : ""} flex flex-col justify-center items-center border-2 border-black`}
+                onClick={() => setSelectedPhoto(photo.srcs)}
+              >
+                {/* Award badge image */}
+                {photo.isAwardWinner && photo.awardImage && (
+                  <ThumbnailImage
+                    src={photo.awardImage}
+                    alt="Award"
+                    width={48}
+                    height={48}
+                    className="absolute top-2 left-2 w-12 h-12 object-contain z-20"
+                  />
+                )}
 
-  {/* Award winner badge text */}
-  {photo.isAwardWinner && (
-    <div className="absolute -top-2 -right-2 z-10 bg-white text-black px-3 py-1 retro-accent text-xs">
-      AWARD WINNER
-    </div>
-  )}
+                {/* Award winner badge text */}
+                {photo.isAwardWinner && (
+                  <div className="absolute -top-2 -right-2 z-10 bg-white text-black px-3 py-1 retro-accent text-xs">
+                    {t("film.award_winner")}
+                  </div>
+                )}
 
-  {/* Image */}
-  <div className="w-full h-auto flex justify-center">
-    <FallbackImage
-      srcs={photo.srcs}
-      alt={photo.title}
-      width={500}
-      height={500}
-      className={`object-cover ${index % 5 === 0 ? "md:h-80" : "h-48"}`} // Ensure the image fills the container without unnecessary space
-    />
-  </div>
+                {/* Image */}
+                <div className="w-full h-auto flex justify-center">
+                  <FallbackImage
+                    srcs={photo.srcs}
+                    alt={photo.title}
+                    width={500}
+                    height={500}
+                    className={`object-cover ${index % 5 === 0 ? "md:h-80" : "h-48"}`}
+                  />
+                </div>
 
-  {/* Text (Title) */}
-  <div className="p-3 text-center w-full">
-    <p className="retro-accent text-xs text-gray-500 uppercase tracking-widest">{photo.title}</p>
-    {photo.isAwardWinner && (
-      <p className="retro-body text-xs text-gray-400 mt-1 font-medium">FIFAK 2025</p>
-    )}
-  </div>
-</div>
-
+                {/* Text (Title) */}
+                <div className="p-3 text-center w-full">
+                  <p className="retro-accent text-xs text-gray-500 uppercase tracking-widest">{photo.title}</p>
+                  {photo.isAwardWinner && (
+                    <p className="retro-body text-xs text-gray-400 mt-1 font-medium">FIFAK 2025</p>
+                  )}
+                </div>
+              </div>
             ))}
           </div>
 
           {/* Artist Statement */}
           <section className="py-20">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="display-2 retro-title mb-8">Artist Statement</h2>
+              <h2 className="display-2 retro-title mb-8">{t("photo.statement_title")}</h2>
               <div className="elegant-divider"></div>
               <div className="minimal-border p-8 bg-gray-900">
                 <p className="retro-body text-lg text-gray-300 leading-relaxed mb-6">
-                  Photography is my way of freezing time, capturing the essence of a moment that will never happen again
-                  in exactly the same way. Each photograph in this collection represents a story, an emotion, or a
-                  perspective that moved me to press the shutter.
+                  {t("photo.statement_p1")}
                 </p>
                 <p className="retro-body text-gray-400 leading-relaxed">
-                  From street photography to portraits, from landscapes to abstract compositions, this exhibition
-                  showcases the diversity of my photographic vision and my continuous exploration of light, shadow, and
-                  human connection.
+                  {t("photo.statement_p2")}
                 </p>
                 <div className="mt-8">
                   <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">— Slim Abroug, 2025</p>
@@ -248,10 +245,10 @@ export default function PhotographyPage() {
       <footer className="border-t border-gray-800 py-12">
         <div className="container mx-auto px-6 text-center">
           <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
-            © 2025 Slim Abroug. All rights reserved.
+            © 2025 Slim Abroug. {t("footer.rights")}
           </p>
         </div>
       </footer>
     </div>
-  );
+  )
 }

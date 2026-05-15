@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Clock, User, MapPin, Award } from "lucide-react"
 import Loader from "@/components/loader"
+import { useLanguage } from "@/contexts/language-context"
 
 
 interface Film {
@@ -19,6 +20,7 @@ interface Film {
   type: string
   poster: string
   description: string
+  descriptionFr: string
   roles: string[]
   highlights: string[]
   location?: string
@@ -27,6 +29,8 @@ interface Film {
 }
 
 export default function FilmographyPage() {
+  const { t, language } = useLanguage()
+  const isFrench = language === "fr"
   const [selectedFilm, setSelectedFilm] = useState<Film | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -47,6 +51,7 @@ const films: Film[] = [
     type: "Short Fiction",
     poster: "/filmography/project1/main.png",
     description: "A compelling exploration of memory and loss through masterful lighting design and cinematography.",
+    descriptionFr: "Une exploration fascinante de la mémoire et de la perte à travers une conception d'éclairage et une cinématographie magistrales.",
     roles: ["Director of Photography", "Colorist"],
     highlights: [
       "Exceptional lighting design and execution",
@@ -72,6 +77,7 @@ const films: Film[] = [
     type: "Short Fiction",
     poster: "/filmography/project2/main.jpg",
     description: "Award-winning film that participated in JCC, FIFAK, and Cinemana festivals.",
+    descriptionFr: "Film primé ayant participé aux festivals JCC, FIFAK et Cinemana.",
     roles: ["Director of Photography", "Colorist"],
     highlights: [
       "Winner of Best Film at FIFAK 2024",
@@ -99,6 +105,8 @@ const films: Film[] = [
     poster: "/filmography/project3/main.png",
     description:
       "Outdoor cinematography in Ain Drahem's natural landscapes, integrating nature into visual composition.",
+    descriptionFr:
+      "Cinématographie en extérieur dans les paysages naturels d'Aïn Draham, intégrant la nature dans la composition visuelle.",
     roles: ["Director of Photography", "Colorist"],
     highlights: [
       "80% outdoor cinematography",
@@ -126,6 +134,8 @@ const films: Film[] = [
     poster: "/filmography/project4/main.png",
     description:
       "Complete image responsibility project, handling all visual aspects from cinematography to post-production.",
+    descriptionFr:
+      "Projet avec responsabilité totale de l'image, gérant tous les aspects visuels de la cinématographie à la post-production.",
     roles: ["Cinematographer", "Director of Photography", "Camera Operator", "Colorist"],
     highlights: [
       "Complete image responsibility",
@@ -151,6 +161,7 @@ const films: Film[] = [
     type: "Short Fiction Documentary",
     poster: "/filmography/project5/main.png",
     description: "Powerful documentary defending social causes through compelling visual storytelling.",
+    descriptionFr: "Documentaire puissant défendant des causes sociales à travers une narration visuelle percutante.",
     roles: ["Director of Photography", "Camera Operator"],
     highlights: [
       "Documentary-style cinematography",
@@ -176,6 +187,7 @@ const films: Film[] = [
     type: "Short Fiction",
     poster: "/filmography/project6/main.png",
     description: "Exploration of transformation and renewal through innovative cinematographic techniques.",
+    descriptionFr: "Exploration de la transformation et du renouveau à travers des techniques cinématographiques innovantes.",
     roles: ["Director of Photography", "Colorist"],
     highlights: [
       "Creative visual storytelling",
@@ -203,6 +215,7 @@ const films: Film[] = [
     type: "Short Fiction",
     poster: "/filmography/project7/main.jpg",
     description: "Part of Khatawet Cineparkour 2024, showcasing maritime cinematography.",
+    descriptionFr: "Fait partie de Khatawet Cineparkour 2024, mettant en avant la cinématographie maritime.",
     roles: ["Director of Photography", "Camera Operator"],
     highlights: [
       "Maritime cinematography",
@@ -227,6 +240,7 @@ const films: Film[] = [
     type: "Short Fiction",
     poster: "/filmography/project8/main.png",
     description: "Collaborative directorial project exploring identity and questioning.",
+    descriptionFr: "Projet de réalisation collaboratif explorant l'identité et le questionnement.",
     roles: ["Director of Photography", "Colorist"],
     highlights: [
       "Dual director collaboration",
@@ -252,6 +266,7 @@ const films: Film[] = [
     type: "Short Fiction",
     poster: "/filmography/project9/main.png",
     description: "Science fiction cinematography exploring cosmic themes and visual effects.",
+    descriptionFr: "Cinematographie de science-fiction explorant des thèmes cosmiques et des effets visuels.",
     roles: ["Director of Photography", "Colorist"],
     highlights: [
       "Science fiction cinematography",
@@ -278,6 +293,7 @@ const films: Film[] = [
     type: "Short Fiction",
     poster: "/filmography/project10/main.jpg",
     description: "Festival-participating film showcasing innovative cinematographic techniques.",
+    descriptionFr: "Film participant à des festivals, illustrant des techniques cinématographiques innovantes.",
     roles: ["Cinematographer", "Colorist"],
     highlights: [
       "Multiple festival participations",
@@ -302,6 +318,7 @@ const films: Film[] = [
     type: "Short Fiction",
     poster: "/filmography/project11/main.png",
     description: "Award-winning film from Impress Film Competition.",
+    descriptionFr: "Film primé au concours Impress Film.",
     roles: ["Cinematographer"],
     highlights: [
       "Impress Film Competition winner",
@@ -327,6 +344,7 @@ const films: Film[] = [
     type: "Short Fiction",
     poster: "/filmography/project12/main.jpeg",
     description: "The result of several weeks of work in partnership with the French Institute of Tunisia and the CinéFabrique - National Film School (France) and sawa.",
+    descriptionFr: "Le résultat de plusieurs semaines de travail en partenariat avec l'Institut Français de Tunisie, la CinéFabrique - École Nationale de Cinéma (France) et Sawa.",
     roles: ["Director of Photography", "Colorist","Camera Operator"],
     highlights: [
      "Indoor cinematography",
@@ -354,6 +372,7 @@ const films: Film[] = [
     type: "Art Video",
     poster: "/filmography/project13/main.png",
     description: "Part of a residence in taciir",
+    descriptionFr: "Fait partie d'une résidence à Taciir.",
     roles: ["Director of Photography", "Colorist","Camera Operator"],
     highlights: [
       "Urban Cinematography"
@@ -385,11 +404,10 @@ const films: Film[] = [
         <div className="container mx-auto px-6 max-w-7xl">
           {/* Header */}
           <section className="text-center py-16">
-            <h1 className="display-1 retro-title mb-8">FILMOGRAPHY</h1>
+            <h1 className="display-1 retro-title mb-8">{t("film.title")}</h1>
             <div className="elegant-divider"></div>
             <p className="retro-body text-lg text-gray-400 max-w-3xl mx-auto">
-              A comprehensive collection of films showcasing visual storytelling, technical precision, and emotional
-              impact. Each project represents a unique collaboration and creative journey.
+              {t("film.subtitle")}
             </p>
           </section>
 
@@ -423,7 +441,7 @@ const films: Film[] = [
                   {film.awards && (
                     <div className="mt-3">
                       <span className="inline-block bg-gray-800 text-gray-300 px-2 py-1 text-xs retro-accent">
-                        AWARD WINNER
+                        {t("film.award_winner")}
                       </span>
                     </div>
                   )}
@@ -464,19 +482,19 @@ const films: Film[] = [
 
                   <div className="space-y-6">
                     <div className="minimal-border p-6">
-                      <h3 className="retro-subtitle text-xl mb-4">Film Details</h3>
+                      <h3 className="retro-subtitle text-xl mb-4">{t("film.details")}</h3>
                       <div className="space-y-3 retro-body text-sm">
                         <div className="flex items-center space-x-3">
                           <User className="h-4 w-4 text-gray-500" />
-                          <span>Director: {selectedFilm.director}</span>
+                          <span>{t("film.director")}: {selectedFilm.director}</span>
                         </div>
                         <div className="flex items-center space-x-3">
                           <Clock className="h-4 w-4 text-gray-500" />
-                          <span>Duration: {selectedFilm.duration}</span>
+                          <span>{t("film.duration")}: {selectedFilm.duration}</span>
                         </div>
                         <div className="flex items-center space-x-3">
                           <Calendar className="h-4 w-4 text-gray-500" />
-                          <span>Year: {selectedFilm.year}</span>
+                          <span>{t("film.year")}: {selectedFilm.year}</span>
                         </div>
                         {selectedFilm.location && (
                           <div className="flex items-center space-x-3">
@@ -488,7 +506,7 @@ const films: Film[] = [
                     </div>
 
                     <div>
-                      <h3 className="retro-subtitle text-xl mb-3">My Roles</h3>
+                      <h3 className="retro-subtitle text-xl mb-3">{t("film.roles")}</h3>
                       <div className="flex flex-wrap gap-2">
                         {selectedFilm.roles.map((role, index) => (
                           <Badge key={index} variant="outline" className="retro-accent text-xs border-gray-700">
@@ -500,7 +518,7 @@ const films: Film[] = [
 
                     {selectedFilm.awards && (
                       <div>
-                        <h3 className="retro-subtitle text-xl mb-3">Awards</h3>
+                        <h3 className="retro-subtitle text-xl mb-3">{t("film.awards")}</h3>
                         <div className="space-y-2">
                           {selectedFilm.awards.map((award, index) => (
                             <div key={index} className="flex items-center space-x-3">
@@ -513,15 +531,17 @@ const films: Film[] = [
                     )}
 
                     <div>
-                      <h3 className="retro-subtitle text-xl mb-3">Description</h3>
-                      <p className="retro-body text-gray-300 leading-relaxed">{selectedFilm.description}</p>
+                      <h3 className="retro-subtitle text-xl mb-3">{t("film.description")}</h3>
+                      <p className="retro-body text-gray-300 leading-relaxed">
+                        {isFrench ? selectedFilm.descriptionFr : selectedFilm.description}
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 {/* Photo Gallery */}
                 <div>
-                  <h3 className="display-3 retro-title mb-6 text-center">Behind the Scenes</h3>
+                  <h3 className="display-3 retro-title mb-6 text-center">{t("film.bts")}</h3>
                   <div className="elegant-divider"></div>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
                     {selectedFilm.photos.map((photo, index) => (
@@ -543,7 +563,7 @@ const films: Film[] = [
 
                 {/* Highlights */}
                 <div className="minimal-border p-6 bg-gray-900">
-                  <h3 className="retro-subtitle text-xl mb-4">Key Highlights</h3>
+                  <h3 className="retro-subtitle text-xl mb-4">{t("film.highlights")}</h3>
                   <ul className="space-y-2 retro-body">
                     {selectedFilm.highlights.map((highlight, index) => (
                       <li key={index} className="flex items-start space-x-3">

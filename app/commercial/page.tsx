@@ -54,7 +54,10 @@ function FallbackImage({
   );
 }
 
+import { useLanguage } from "@/contexts/language-context";
+
 export default function CommercialPage() {
+  const { t } = useLanguage();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -114,16 +117,16 @@ export default function CommercialPage() {
         <div className="container mx-auto px-6 max-w-7xl">
           {/* Header */}
           <section className="text-center py-16">
-            <h1 className="display-1 retro-title mb-8 text-white">COMMERCIAL WORK</h1>
+            <h1 className="display-1 retro-title mb-8 text-white">{t("comm.title")}</h1>
             <div className="elegant-divider"></div>
             <p className="retro-body text-lg text-gray-300 max-w-3xl mx-auto">
-              Commercial portfolio showcasing music video cinematography, exhibition documentation, and event coverage. Each project brings unique challenges and creative opportunities.
+              {t("comm.subtitle")}
             </p>
           </section>
 
           {/* Exhibition Documentation */}
           <section className="mb-20">
-            <h2 className="display-2 retro-title text-center mb-12 text-white">Exhibition Documentation</h2>
+            <h2 className="display-2 retro-title text-center mb-12 text-white">{t("comm.exhibition")}</h2>
             <div className="elegant-divider"></div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
               {exhibitionPhotos.map((photo) => (
@@ -153,14 +156,14 @@ export default function CommercialPage() {
 
           {/* Event Coverage */}
           <section className="mb-20">
-            <h2 className="display-2 retro-title text-center mb-12 text-white">Event Coverage</h2>
+            <h2 className="display-2 retro-title text-center mb-12 text-white">{t("comm.event")}</h2>
             <div className="elegant-divider"></div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-12">
               {eventPhotos.map((event, index) => (
                 <div
                   key={event.id}
                   className={`vintage-card cursor-pointer group ${index % 6 === 0 ? "md:col-span-2" : ""} bg-gray-900 border-gray-700`}
-                  onClick={() => setSelectedImage(event.src)}  // Set the selected image
+                  onClick={() => setSelectedImage(event.src)}
                 >
                   <GalleryImage
                     src={event.src || "/blur.jpg"}
@@ -180,14 +183,14 @@ export default function CommercialPage() {
           {/* Commercial Philosophy */}
           <section className="py-20">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="display-2 retro-title mb-8 text-white">Commercial Approach</h2>
+              <h2 className="display-2 retro-title mb-8 text-white">{t("comm.approach_title")}</h2>
               <div className="elegant-divider"></div>
               <div className="minimal-border p-8 bg-gray-900 border-gray-700">
                 <p className="retro-body text-lg text-gray-300 leading-relaxed mb-6">
-                  Commercial work requires a different mindset — balancing artistic vision with client needs, working within tight deadlines, and delivering consistent quality across various formats and styles.
+                  {t("comm.approach_p1")}
                 </p>
                 <p className="retro-body text-gray-600 leading-relaxed">
-                  From music videos that capture the energy and emotion of the music, to event coverage that preserves precious moments, each commercial project is an opportunity to tell a story while meeting professional standards and client expectations.
+                  {t("comm.approach_p2")}
                 </p>
                 <div className="mt-8">
                   <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
@@ -206,12 +209,12 @@ export default function CommercialPage() {
           {selectedImage && (
             <div className="relative">
               <FallbackImage
-                srcs={[selectedImage]}  // Only one image selected for the modal
+                srcs={[selectedImage]}
                 alt="Selected commercial work"
                 width={800}
                 height={600}
                 className="w-full h-auto max-h-[80vh] object-contain"
-                loading="eager"  // Load eagerly for modal images
+                loading="eager"
               />
             </div>
           )}
@@ -222,10 +225,10 @@ export default function CommercialPage() {
       <footer className="border-t border-gray-700 py-12 bg-black">
         <div className="container mx-auto px-6 text-center">
           <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
-            © 2025 Slim Abroug. All rights reserved.
+            © 2025 Slim Abroug. {t("footer.rights")}
           </p>
         </div>
       </footer>
     </div>
-  );
+  )
 }

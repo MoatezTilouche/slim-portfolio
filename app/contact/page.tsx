@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react"
+"use client"
 
 import { GalleryImage } from "@/components/ui/optimized-image"
 import Link from "next/link"
 import { RetroNav } from "@/components/retro-nav"
 import { Mail, Instagram, Facebook, Linkedin, Phone, MapPin } from "lucide-react"
+import { useLanguage } from "@/contexts/language-context"
 
 export default function ContactPage() {
-    
+  const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-black">
@@ -16,11 +17,10 @@ export default function ContactPage() {
         <div className="container mx-auto px-6 max-w-6xl">
           {/* Header */}
           <section className="text-center py-16">
-            <h1 className="display-1 retro-title mb-8">CONTACT</h1>
+            <h1 className="display-1 retro-title mb-8">{t("contact.page_title")}</h1>
             <div className="elegant-divider"></div>
             <p className="retro-body text-lg text-gray-400 max-w-3xl mx-auto">
-              Ready to collaborate on your next project? Whether it's a film, commercial work, or photography session,
-              I'd love to hear about your vision and how we can bring it to life together.
+              {t("contact.page_subtitle")}
             </p>
           </section>
 
@@ -34,28 +34,24 @@ export default function ContactPage() {
                     alt="Slim Abroug - Director of Photography"
                     width={400}
                     height={500}
-                    className="w-80 h-96 object-cover desaturated mx-auto"
+                    className="w-80 h-96 object-cover mx-auto"
                   />
                 </div>
                 <div className="mt-6">
                   <h3 className="retro-title text-2xl mb-2">SLIM ABROUG</h3>
                   <p className="retro-accent text-sm text-gray-400 uppercase tracking-widest">
-                    Director of Photography • Colorist • Visual Storyteller
+                    {t("home.subtitle")}
                   </p>
                 </div>
               </div>
 
               <div className="minimal-border p-8 bg-gray-900">
-                <h3 className="retro-subtitle text-xl mb-4">About</h3>
+                <h3 className="retro-subtitle text-xl mb-4">{t("contact.about_title")}</h3>
                 <p className="retro-body text-gray-300 leading-relaxed mb-4">
-                  Director of Photography, colorist, and visual storyteller with a background in cinema and a passion
-                  for crafting powerful images — whether in motion or still. My work moves between narrative films,
-                  photography, and commissioned projects like music videos and event coverage.
+                  {t("contact.about_p1")}
                 </p>
                 <p className="retro-body text-gray-400 leading-relaxed">
-                  I approach every frame with intention, balancing technical precision with emotional impact. Currently
-                  based in Tunisia, I'm always looking to collaborate on projects that value visual depth, rhythm, and
-                  storytelling.
+                  {t("contact.about_p2")}
                 </p>
               </div>
             </div>
@@ -63,7 +59,7 @@ export default function ContactPage() {
             {/* Contact Information */}
             <div className="space-y-8">
               <div className="minimal-border p-8 bg-gray-900">
-                <h3 className="retro-subtitle text-xl mb-6">Get In Touch</h3>
+                <h3 className="retro-subtitle text-xl mb-6">{t("contact.get_in_touch")}</h3>
 
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
@@ -71,7 +67,7 @@ export default function ContactPage() {
                     <div>
                       <p className="retro-accent text-sm uppercase tracking-widest text-gray-500">Email</p>
                       <a
-                        href="mailto:slim.abroug@email.com"
+                        href="mailto:contact.slimabroug@gmail.com"
                         className="retro-body text-gray-300 hover:text-white transition-colors"
                       >
                         contact.slimabroug@gmail.com
@@ -84,7 +80,7 @@ export default function ContactPage() {
                     <div>
                       <p className="retro-accent text-sm uppercase tracking-widest text-gray-500">Phone</p>
                       <a
-                        href="tel:+21612345678"
+                        href="tel:+21650929452"
                         className="retro-body text-gray-300 hover:text-white transition-colors"
                       >
                         +216 50 929 452
@@ -104,7 +100,7 @@ export default function ContactPage() {
 
               {/* Social Media */}
               <div className="minimal-border p-8 bg-gray-900">
-                <h3 className="retro-subtitle text-xl mb-6">Follow My Work</h3>
+                <h3 className="retro-subtitle text-xl mb-6">{t("contact.follow_work")}</h3>
 
                 <div className="grid grid-cols-2 gap-4">
                   <Link
@@ -126,17 +122,12 @@ export default function ContactPage() {
                     <Linkedin className="h-4 w-4 mx-auto mb-2" />
                     LinkedIn
                   </Link>
-
-                  {/* <Link href="#" className="retro-button text-center">
-                    <Mail className="h-4 w-4 mx-auto mb-2" />
-                    Behance
-                  </Link> */}
                 </div>
               </div>
 
               {/* Services */}
               <div className="minimal-border p-8 bg-gray-900">
-                <h3 className="retro-subtitle text-xl mb-6">Services</h3>
+                <h3 className="retro-subtitle text-xl mb-6">{t("contact.services")}</h3>
 
                 <div className="space-y-3">
                   <div className="flex items-center space-x-3">
@@ -168,11 +159,11 @@ export default function ContactPage() {
 
               {/* Call to Action */}
               <div className="text-center">
-                <a href="mailto:slim.abroug@email.com" className="retro-button inline-block mb-4">
-                  Start a Project
+                <a href="mailto:contact.slimabroug@gmail.com" className="retro-button inline-block mb-4">
+                  {t("contact.start_project")}
                 </a>
                 <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
-                  Let's create something meaningful together
+                  {t("contact.cta_subtitle")}
                 </p>
               </div>
             </div>
@@ -183,8 +174,7 @@ export default function ContactPage() {
             <div className="max-w-3xl mx-auto text-center">
               <div className="minimal-border p-8 bg-gray-900">
                 <p className="retro-subtitle text-xl text-gray-300 mb-4">
-                  "Every great film starts with a conversation about vision, story, and the power of visual
-                  storytelling."
+                  "{t("contact.quote")}"
                 </p>
                 <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">— Slim Abroug</p>
               </div>
@@ -197,9 +187,9 @@ export default function ContactPage() {
       <footer className="border-t border-gray-800 py-12">
         <div className="container mx-auto px-6 text-center">
           <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
-            © 2025 Slim Abroug. All rights reserved.
+            © 2025 Slim Abroug. {t("footer.rights")}
           </p>
-           <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
+          <p className="retro-accent text-sm text-gray-500 uppercase tracking-widest">
             © Developed By Moatez Tilouche.
           </p>
         </div>
